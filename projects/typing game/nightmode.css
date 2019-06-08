@@ -1,0 +1,75 @@
+:root{
+	font-size: 16px;
+}
+*{
+	box-sizing: border-box;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 5px;
+	color: #222;
+}
+body{
+	background-color: #012;
+}
+input{
+	outline: none;
+	border: none;
+	width: 70%;
+	text-align: center;
+	font-size: 1.1rem;
+}
+h1{
+	text-align: center;
+	color: #fff;
+}
+div.card{
+	text-align:center;
+	width: 90%;
+	margin: 10px auto;
+}
+div#board{
+	background-color: orangered;
+}
+div#board div#word-display{
+	font-size: 1.5rem;
+	color: white;
+}
+div#hint{
+	text-align: center;
+	color: lightyellow;
+}
+div#status{
+	background-color: darkgreen;
+	color: white;
+}
+div#status span{
+	margin: 0;
+	padding: 0;
+	color: white;
+}
+/* nightmode control styles */
+div#nightmode-control{
+	background-color: #33b;
+	color: white;
+}
+div#switch-container{
+	width: 60%;
+	height: 30px;
+	margin: 10px auto;
+	position: relative;
+	border-radius: 15px;
+	background-color: lightyellow;
+	cursor: pointer;
+}
+div#switch{
+	height: 40px;
+	width: 50%;
+	position: absolute;
+	top: -5px;
+	left: 0%;
+	margin: 0;
+	border-radius: 15px;
+	background-color: orange;
+	cursor: pointer;
+	transition: 0.5s;
+}

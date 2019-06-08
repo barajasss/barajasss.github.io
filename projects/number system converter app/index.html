@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Number System Converter</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="description" content="Please try this binary-decimal-octal-hexadecimal converter made with JavaScript">
+	<meta name="author" content="Baraja Swargiary">
+	<meta charset="utf-8">
+	<link href="materialize.min.css" rel="stylesheet">
+	<link href="number system converter.css" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+	<div id="converter-app" class="container">
+		<header-component>
+		</header-component>
+		<body-component 
+			@update-number-system-2 = "updateNumberSystem($event)"
+			@update-input-2 = "updateInput($event)"
+			:number-systems = "numberSystems"
+			:input1 = "input1"
+			:input2 = "input2"
+			:number-system-position1 = 'numberSystemPosition1'
+			:number-system-position2 = 'numberSystemPosition2'
+		>
+		</body-component>
+		<p style="text-align: center; color: darkorange">App Written In JavaScript - Baraja, BSc 2nd Sem</p>
+		<div class="center row">
+			<a 
+				style="line-height: 0.6; text-transform: none;"
+				class="col s12 m12 l12 btn waves-effect red" 
+				href="source code.txt" download
+			> 
+				<i 
+					style="font-size: 30px; transform: translateY(11px);" 
+					class="material-icons large"
+				>
+					file_download
+				</i>
+				Download "source code.txt" file
+			</a>
+		</div>
+	</div>
+	<script src="materialize.min.js"></script>
+	<script src="vue.js"></script>
+	<script src="header-component.js"></script>
+	<script src="body-component.js"></script>
+	<script src="keyboard-component.js"></script>
+	<script src="number system converter.js"></script>
+</body>
+</html>

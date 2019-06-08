@@ -1,0 +1,16 @@
+{
+  "short_name": "Sun",
+  "name": "Sun Swargiary app",
+  "start_url": "https://sunswargiary.github.io",
+  "background_color": "magenta",
+  "theme_color": "lightgreen",
+  "display": "fullscreen",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "100x100"
+    }
+  ]
+}

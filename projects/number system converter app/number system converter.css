@@ -1,0 +1,21 @@
+body{
+	background-color: khaki;
+}
+#number-system-display{
+	padding: 8px;
+	border-radius: 5px;
+	color: white;
+	text-align: center;
+	text-transform: capitalize;
+}
+button{
+	outline: none !important;
+}
+h4#heading{
+	padding: 5px ;
+}
+@media screen and (min-width: 420px){
+	h4#heading{
+		padding: 20px ;
+	}
+}

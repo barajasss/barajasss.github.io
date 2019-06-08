@@ -1,0 +1,85 @@
+body{
+	background-color: black;
+}
+h1{
+	color: #fff;
+	text-shadow: 0.5px 1px 10px yellow;
+	font-family: "Jokerman";
+	text-align: center;
+}
+h2#display{
+	position: absolute; /*relative to body*/
+	left: 8px;
+	padding: 5px;
+	border-radius: 4px;
+	background-color: yellow;
+}
+h2#display2{
+	position: absolute;
+	left: 8px;
+	padding: 5px;
+	border-radius: 4px;
+	top: 5px;
+	background-color: yellow;
+}
+h2#timeDisplay{
+	position: absolute;
+	width: 115px;
+	left: 8px;
+	padding: 5px;
+	border-radius: 4px;
+	top: 155px;
+	background-color: yellow;
+}
+div.container{
+	height: 400px;
+	width: 800px;
+	margin: 0px auto;
+	border: 5px double white;
+	border-radius: 22px;
+	background-color: #e53;
+	position: relative;
+}
+div.pole{
+	width: 7px;
+	height: 300px;
+	background-color: #545;
+	transition: 0.2s;
+	position: absolute;
+}
+/* every pole left positions were subtracted by 5 */
+div#pole1{
+	left: 197px;
+	bottom: 0px;
+}
+div#pole2{
+	left: 397px;
+	bottom: 0px;
+}
+div#pole3{
+	left: 597px;
+	bottom: 0px;
+}
+div.disc{
+	height: 30px;
+	border-radius: 20px;
+	transition: 0.15s;
+	position: absolute;
+}
+div#buttons{
+	width: 100vw;
+	display: none;
+	text-align: center;
+}
+div#buttons button{
+	font-size: 30px;
+	height: 80px;
+	width: 100px;
+	background-color: yellow;
+	margin: 5px;
+}
+@media screen and (max-width: 800px){
+	div#buttons{
+		display: block;
+	}
+}

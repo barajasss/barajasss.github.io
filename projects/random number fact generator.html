@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Random number fact generator</title>
+	<meta name="description" content="Input a number and get a random fact for that number. Made on 8th March 2019">
+	<meta name="author" content="Baraja Swargiary">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ 	<style>
+ 		body{
+ 			background-color: lightyellow;
+ 			color: #444;
+ 			text-align: center;
+ 		}
+ 		h2#heading{
+ 			margin: 20px auto;
+ 			width: 400px;
+ 			color: #444;
+ 			background-color: white;
+ 			padding-bottom: 4px;
+ 			border-bottom: 1.5px double silver;
+ 			border-top: 1.5px double silver;
+ 		}
+ 		div{
+ 			box-sizing: border-box !important;
+ 			margin: 0 auto;
+ 		}
+ 		div#container{
+ 			border: 2px solid #888;
+ 			background-color: lightgreen;
+ 			padding: 10px;
+ 			width: 400px;
+ 			transition: 0.5s;
+ 		}
+ 		div#output{
+ 			color: white;
+ 			width: 97%;
+ 			min-height: 80px;
+ 			margin: 10px auto;
+ 			background-color: #3aa;
+ 			padding: 10px;
+ 			border: 1px solid white;
+ 		}
+ 		input.style{
+ 			display: inline-block;
+ 			font-size: 17px;
+ 			width: 93%;
+ 			color: black; 
+ 			background: white;
+ 			padding: 5px;
+ 			border: 1px solid #222;
+ 		}
+ 		input.style:focus{
+ 			outline: none;
+ 		}
+ 		div#comments{
+ 			width: 400px;
+ 			padding: 10px;
+ 			text-align: left;
+ 			border: 1px solid black;
+ 		}
+ 		div#comments-display{
+ 			margin-top: 15px;
+ 			padding: 10px;
+ 			border: 1px solid black;
+ 		}
+ 		input#name, textarea#comment{
+ 			display: block;
+ 			margin: 5px auto;
+ 			padding: 5px;
+ 			width: 95%;
+
+ 		}
+ 		input#name{
+ 			width: 93%;
+ 		}
+ 		input.comment-input:focus{
+ 			outline: none;
+ 		}
+ 		fieldset{
+ 			background-color: khaki;
+ 			border: 1px solid black;
+ 		}
+ 		legend{
+ 			background-color: #ffa;
+ 			padding: 5px;
+ 			border: 1px solid black;
+ 		}
+ 		div#comments-display{
+ 			background-color: white;
+ 		}
+ 		fieldset button{
+ 			width: 100px;
+ 			border: 1px solid white;
+ 			padding: 6px;
+ 			color: white;
+ 			background-color: #78f;
+ 			margin-top: 0px;
+ 		}
+ 		fieldset button.active{
+ 			opacity: 1;
+ 			cursor: pointer;
+ 		}
+ 		fieldset button.deactive{
+ 			opacity: 0.6;
+ 			cursor: not-allowed;
+ 		}
+ 		div#visitsDisplay{
+ 			margin: 10px;
+ 		}
+ 		@media screen and (max-width: 500px){
+ 			div#container, div#comments, h2#heading{
+ 				width: 90%;
+ 			}
+ 		}
+ 	</style>
+ 	<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-database.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyBydi4rV7GUq0COVihfXmXnFiy3IwYuLTs",
+	    authDomain: "number-game-b9f3a.firebaseapp.com",
+	    databaseURL: "https://number-game-b9f3a.firebaseio.com",
+	    projectId: "number-game-b9f3a",
+	    storageBucket: "number-game-b9f3a.appspot.com",
+	    messagingSenderId: "962080846110"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+</head>
+<body>
+	<h2 id="heading">Random Facts App</h2>
+	<div id="container">
+		<input placeholder="enter a number in between 0-199" class="style" type="Number" id="input">
+		<div id="output">Random fact for that number will appear here...</div>
+	</div>
+	<br>
+	<div id="comments">
+
+		<form id="form">
+			<fieldset>
+				<legend style="text-align: center;">Please Leave A Comment</legend>
+				
+					Name: 
+					<br><input class="comment-input" type="text" id="name" required="required">
+				<br>
+					Comment: 
+					<br><textarea style="resize: none; outline: none;" rows="3" class="comment-input" id="comment" required="required"></textarea>
+				<br>
+				<button id="submit" type="submit">Post It</button>
+			</fieldset>
+		</form>
+
+		<h2 style="text-align: center;">Comments</h2>
+		
+		<label>
+			<input id="sort" type="checkbox" checked>Newest first</input>
+		</label>
+		<div id="comments-display">
+			Loading Comments...
+		</div>
+	</div>
+	<div id="visitsDisplay"></div>
+	<script>
+		var tmp;
+		var checkbox = document.getElementById("sort");
+		checkbox.onclick = function(){
+			commentsDisplay.innerHTML = "Loading Comments...";
+			if(checkbox.checked){
+				tmp = comments.slice().reverse();
+				loadComments(tmp);
+			}
+			else{
+				tmp = comments.slice();
+				loadComments(tmp);
+			}
+		}
+		var facts = [
+		"0 is the atomic number of the theoretical element tetraneutron.",
+		"1 is the number of moons orbiting Earth.",
+		"2 is the lowest channel of television in the United States, Canada, Argentina and Mexico on which television signals are broadcast.",
+		"3 is the number of witches in William Shakespeare's Macbeth.",
+		"4 is the number of movements in a symphony.",
+		"5 is the number of completed, numbered piano concertos of Ludwig van Beethoven, Sergei Prokofiev, and Camille Saint-Saëns.",
+		"6 is the jersey number worn by the starting stand-off half/five-eighth in most rugby league competitions.",
+		"7 is the number of SI base units.",
+		"8 is the number of principles of Yong in Chinese calligraphy.",
+		"9 is the number of innings in a regulation, non-tied game of baseball.",
+		"10 is the number of spacetime dimensions in some superstring theories.",
+		"11 is the number of players in an American football team on the field at one time during play.",
+		"12 is the pairs of ribs normally in the human body.",
+		"13 is the speed of rush hour traffic on average in kilometres per hour in London.",
+		"14 is the number of times that a typical dairy cow lies down and stands up a day on average.",
+		"15 is the approximate speed in miles per hour a penguin swims at.",
+		"16 is the number of teams that qualified for the finals of the FIFA World Cup from 1934 through 1978 (although for various reasons, only 15 competed in the 1938 and 1950 finals).",
+		"17 is 'the least random number' as described at MIT, according to hackers' lore.",
+		"18 is the number of bronze monks the Shaolin temple had in Chinese folklore.",
+		"19 is the final year a person is a teenager.",
+		"20 is the number of baby teeth in the deciduous dentition.",
+		"21 is the number of points required to win a game in badminton and table tennis (before 2001).",
+		"22 is the typical length in minutes of a half hour sitcom not including commercials.",
+		"23 is the number of chromosomes normal human sex cells have.",
+		"24 is the number of frames per second at which motion picture film is usually projected.",
+		"25 is the number of points needed to win a set in volleyball under rally scoring rules.",
+		"26 is the number of episodes in a television program each year (usually).",
+		"27 is the number of countries in the European Union (as of August 2011).",
+		"28 is the number of days the curing time of concrete is classically considered to be.",
+		"29 is the number of letters in the Turkish,Finnish, Swedish,Faroese,Danish and Norwegianalphabets.",
+		"30 is the percentage of methane on Earth produced from the flatulence of domesticated cows.",
+		"31 is the number of days in the months January, March, May, July, August, October and December.",
+		"32 is the freezing point of water at sea level in degrees Fahrenheit.",
+		"33 is the number of workers trapped, and also the number of survivors of the 2010 Copiapó mining accident.",
+		"34 is the lucky number of Victor Pelevin's protagonist Stepan Mikhailov in the novel Numbers.",
+		"35 is the minimum age of candidates for election to the United States Presidency.",
+		"36 is the perfect score on the ACT.",
+		"37 is the number of plays William Shakespeare is thought to have written (counting Henry IV as three parts).",
+		"38 is the number of minutes in the shortest war in history in which Zanzibar surrendered to England in 1896.",
+		"39 is the number of books in the Old Testament according to Protestant canon.",
+		"40 is the number of eggs that female alligators lay, which hatch in 60 - 70 days.",
+		"41 is the age at which writer/director Tom Graeff (of Teenagers from Outer Space fame) committed suicide.",
+		"42 is the number of gallons that one barrel of petroleum holds.",
+		"43 is the maximum number of cars participating in a NASCAR race in the Cup Series or Nationwide Series.",
+		"44 is the number of candles in a box of Hanukkah candles.",
+		"45 is the sapphire wedding anniversary in years of marriage.",
+		"46 is the number of mountains in the 46 peaks of the Adirondack mountain range.",
+		"47 is the number of phonemes in English phonology in Received Pronunciation.",
+		"48 is the number of Ptolemaic constellations.",
+		"49 is the number of days and night Siddhartha Gautama spent meditating as a holy man.",
+		"50 is the height in kilometres that a volcano can shoot ash into the sky.",
+		"51 is the atomic number of antimony.",
+		"52 is the number of letters in the English alphabet, if majuscules are distinguished from minuscules.",
+		"53 is the maximum number of facial muscles a smile can require.",
+		"54 is the number of cards in a deck of playing cards, if two jokers are included.",
+		"55 is the number of Delegates who attended the United States Constitutional Convention in 1787.",
+		"56 is the age of Mao Zedong when the People's Republic of China was established on Oct. 1, 1949.",
+		"57 is the number of cm that the smallest man measured, Gul Mohammed (1957-1997) of India.",
+		"58 is the number of counties in California.",
+		"59 is the number on a button commonly worn by feminist activists in the 1970s (based on the claim that a woman earned 59 cents to an equally qualified man's dollar).",
+		"60 is the number of miles polar bears have been known to swim without a rest.",
+		"61 is the number of points required to win a \"standard\" game of Cribbage.",
+		"62 is the atomic number of samarium.",
+		"63 is the atomic number of europium.",
+		"64 is the total number of black and white squares on the game board in chess or draughts.",
+		"65 is the traditional age for retirement in the United Kingdom, Germany and other countries.",
+		"66 is the total number of chapters in the Bible book of Isaiah.",
+		"67 is the number of throws in Judo.",
+		"68 is the ideal temperature (F) for developing black-and-white film.",
+		"69 is the atomic number of thulium, a lanthanide.",
+		"70 is the distance (meter) from archer to targets in Olympic Archery.",
+		"71 is the number of different characters that can be used with a standard English Keyboard, excluding uppercase letters.",
+		"72 is the speed in miles per hour that cheetahs, the fastest land animal, can reach.",
+		"73 is the percentage of girls in Bangladesh that are married by age 18.",
+		"74 is the atomic number of tungsten.",
+		"75 is the age limit for Canadian senators.",
+		"76 is the atomic number of osmium.",
+		"77 is the atomic number of iridium.",
+		"78 is the number of lines that make up Metatron's Cube.",
+		"79 is the record for cumulative weeks at #1 on the Billboard charts, held by Elvis Presley.",
+		"80 is the percentage of American men who say they would marry the same woman if they had it to do all over again.",
+		"81 is the number of squares on a shogi playing board.",
+		"82 is the atomic number of lead.",
+		"83 is the highest UHF channel on older televisions made before the late 1970s.",
+		"84 is the atomic number of polonium.",
+		"85 is the IQ and nickname of Aaron in Alien 3.",
+		"86 is the device number for a lockout relay function in electrical circuit protection schemes.",
+		"87 is the number of tools in the Wenger Swiss Army Knife version XXL, listed in the Guinness Book of World Records as the world's most multi-functional penknife.",
+		"88 is the number of constellations in the sky as defined by the International Astronomical Union.",
+		"89 is the number of units of each colour in the board game Blokus.",
+		"90 is the number of minutes in a football (soccer) match.",
+		"91 is the atomic number of protactinium.",
+		"92 is the number of stories in the Xujiahui Tower proposed to be built in Shanghai, China.",
+		"93 is that approximate distance in millions of miles the Sun is away from the Earth.",
+		"94 is the length of an NBA court in feet.",
+		"95 is the atomic number of americium.",
+		"96 is the rating of Skyrim on metacritic.com.",
+		"97 is the number of minutes it takes the Hubble space telescope to complete an orbit around the Earth.",
+		"98 is the highest jersey number allowed in the National Hockey League (as 99 was retired by the entire league to honor Wayne Gretzky).",
+		"99 is a common price ending in psychological pricing."
+		,"100 is the number of pounds in an American short hundredweight.","101 is is the number of floors of Taipei 101, the tallest skyscraper in the world from 2004 to 2010.","102 is the number of floors in Empire State Building in New York City.","103 is the atomic number of lawrencium, an actinide.","104 is the number of guns on Admiral Horatio Nelson's flagship HMS Victory.","105 is the atomic number of hahnium, also known as dubnium.","106 is the atomic number of seaborgium (Unilhexium Unh).","107 is the atomic number of bohrium.","108 is the number of outlaws in the Chinese classic Water Margin/Outlaws of the Marsh.","109 is the atomic number of meitnerium.","110 is the number also known as \"eleventy\", a term made famous by linguist and author J. R. R. Tolkien (Bilbo Baggins celebrates his eleventy-first birthday at the beginning of The Lord of the Rings) and derived from the Old English hund endleofantig.","111 is the number occasionally referred to as \"eleventy-one\", as read in The Fellowship of the Ring by J.R.R.","112 is the number on mobile phones implementing the GSM standard, where it redirects to the country-specific emergency number.","113 is the atomic number of an element temporarily called ununtrium.","114 is the element with the highest number of protons yet discovered, Ununquadium with the highest number.","115 is the atomic number of an element temporarily called ununpentium.","116 is the prefix for several EU-wide telephone helplines designated as harmonised service of social value.","117 is the atomic number of a recently discovered element temporarily called ununseptium.","118 is the atomic number of the element Ununoctium.","119 is the default port for unencrypted NNTP connections.","120 is the telephone number \"to report a car breakdown on the highway in Austria.","121 is the atomic number of the undiscovered chemical element Unbiunium.","122 is the fire emergency telephone number in Austria.","123 is the atomic number of the yet-to-be-discovered element unbitrium.","124 is the atomic number of the yet-to-be-discovered element unbiquadium.","125 is the atomic number of the yet-to-be-discovered element Unbipentium.","126 is the number of years that Gilgamesh reigned according to the Sumerian king list.","127 is the atomic number of Unbiseptium, an element that has not yet been discovered.","128 is the number of characters in the ASCII character set.","129 is the rank of Liberia in world population.","130 is the approximate maximum height in meters of trees.","131 is the number serving a monkiker for Indie music.","132 is the Opus number of one of Beethoven's greatest works.","133 is the number of career touchdowns from 1983 - 1996 of Canadian Football League quarterback Danny Barrett.","134 is the number of episodes in the TV series Hawaiian Eye that ran on ABC from 1959 to 1963.","135 is the hottest temperature ever measured in the United States in Fahrenheit  at Death Valley, California on July 10, 1913.","136 is the hottest temperature ever recorded in Fahrenheits at Aziziya, Libya in September 1922.","137 is a radioactive isotope of Caesium formed by nuclear fission.","138 is the number of constellations of the Triakis tetrahedron.","139 is the careers home runs given up by MLB pitcher Brian Meadows from 1998 to 2006.","140 is the character-entry limit for Twitter, a well-known characteristic of the service (based on the text messaging limit).","141 is the number of participants (90 Indians and 51 Pilgrims) at the First Thanksgiving.","142 is the number of home-based business ideas included in the 142 Now packet.","143 is the number of milligrams of caffeine in AMP Energy.","144 is a gross (a dozen dozen).","145 is the atomic number of Unquadpentium.","146 is the Guinness World Record for the most languages a poem was recited in.","147 is the final score of the losing team in the NBA game in which Wilt Chamberlain scored 100 points.","148 is the number of episodes of the TV series The Fresh Prince of Bel-Air on NBC from 1990 to 1996.","149 is the number of legal proceedings against 149 communists in Estonia in 1924.","150 is the number of degrees in the quincunx astrological aspect explored by Johannes Kepler.","151 is the height of the Statue of Liberty from the base to the torch in feet (46 m).","152 is the number of diapers solder in a Pampers Swaddlers pack.","153 is the code for malignant neoplasm of the colon in the International Statistical Classification of Diseases and Related Health Problems.","154 is the period in days that the sun follows on gamma-ray flares.","155 is the number of episodes the TV series Sea Hunt ran in syndication from 1958 to 1961.","156 is the number of hourly gongs a clock strikes in one day (78 AM gongs and 78 PM gongs).","157 is the elevation in meters of Atalanti Island in the North Euboean Gulf of the Aegean Sea.","158 is the number of verses of the national anthem of Greece.","159 is the number of counties in the state of Georgia.","160 is the lowest radio frequency band allocation in meters available to amateur radio operators in most countries.","161 is the number of episodes the TV series The Avengers ran from 1961 to 1969.","162 is total number of baseball games each team plays during a regular season in Major League Baseball.","163 is the atomic number of an element temporarily called Unhextrium.","164 is the number of episodes that the TV show The Adventures of Rin Tin Tin ran on ABC from 1954 to 1959.","165 is the miles that twenty-mule teams, which were mules and horses attached to wagons, traveled from mines to the nearest railroad spur, 165 miles (275 km) away in Mojave, California.","166 is the feet above sea level at Turriff in Aberdeenshire, Scotland.","167 is the kilometers in length of Andros, Bahamas.","168 is the number of episodes that the The Practice ran on ABC from 1997 to 2004.","169 is the first number of an automatic IPv4 address assigned by TCP/IP when no external networking device is contactable.","170 is 170 is the maximum check-out possible in a standard game of darts (where the final score must be a double).","171 is the atomic number of an element called Ununseptunium.","172 is the rank of Djibouti in world population density.","173 is the Exit status indicated by Mac App Store software when receipt validation fails.","174 is the populatiokn of Aupaluk, Quebec (as of 2006).","175 is the number of films that actress Rose Tapley appeared in.","176 is the number of verses in the longest chapter, the Psalm 119 of the Bible.","177 is the rank of Netherlands Antilles in world population.","178 is the atomic number of an element temporarily called Unseptoctium.","179 is the number of even numbered days of the year.","180 is the maximum possible score in one turn at darts (three triple 20s).","181 is the number of 181 colleges, universities and other higher education institutions in Texas.","182 is the carat of the Star of Bombay cabochon-cut star sapphire originating from Sri Lanka.","183 is the id number of Issam Hamid Al Bin Ali Al Jayfi, a detainee at Guantanamo Bay.","184 is a number believed to be a magic number in nuclear physics.","185 is the record number of singles hit by St. Louis Cardinals Jesse Burkett in 1899.","186 is the rank of Somaliland in countries by population density.","187 is the atomic number of an element temporarily called Unoctseptium.","188 is the rank of Tonga in world population.","189 is the number of irregular verbs in the English language (from \"abide\" to \"write\").","190 is the rank of Seychelles in world population.","191 is a common flight number for flights involved in crashes.","192 is the number of episodes with Moose, a dog, playing Eddie Crane on Frasier.","193 is species of monkeys and apes.","194 is the number of episodes of I Love Lucy that ran on CBS from 1951 to 1960.","195 is the population of Guedanga, in the Ouo Department of ComoÃ© Province, Burkina Faso.","196 is the rank of Sweet Child o' Mine (1987) by Guns N' Roses on Rolling Stone magazine's list of The 500 Greatest Songs of All Time.","197 is the rank of the Solomon Islands in population density.","198 is the number of films that actor Neal Burns appeared in between 1915 and 1946.","199 is the number of steps to the top of the Cape May Lighthouse in Cape May, New Jersey."];
+
+
+
+
+
+
+
+
+
+		var number = document.getElementById("input");
+		var output = document.getElementById("output");
+		var database = firebase.database().ref('comments');
+		var visitDatabase = firebase.database().ref('visits');
+		var comments = [];
+		var counter = 0;
+		var visits = 0;
+		var commentsDisplay = document.getElementById('comments-display');
+		var form = document.getElementById("form");
+		var submitBtn = document.getElementById('submit');
+		submitBtn.setAttribute('class', 'deactive');
+		submitBtn.disabled = true;
+		//button is activated only when all the comment loads
+
+		database.on('value', function(snapshot){
+			var str = "";
+			if(snapshot.val() != null){
+				comments = snapshot.val();
+				tmp = comments.slice().reverse();
+				loadComments(tmp);
+			}
+			else{
+				commentsDisplay.innerHTML = "No Comments yet";
+			}
+			submitBtn.setAttribute('class', 'active');
+			submitBtn.disabled = false;
+		});
+
+		visitDatabase.once('value', function(snapshot){
+			if(snapshot.val() != null)
+				visits = snapshot.val();
+			visitDatabase.set(++visits);
+			document.getElementById('visitsDisplay').innerHTML = "This page has been visited "+visits+(visits==1?" time":" times");
+		})
+
+		form.onsubmit = function(e){	
+			commentsDisplay.innerHTML = "Loading comments...";
+			var date = new Date();
+			//button is disabled until the comment display refreshes
+			submitBtn.setAttribute('class', 'deactive');
+			submitBtn.disabled = true;
+			comments.push({
+				name: document.getElementById('name').value,
+				comment: document.getElementById('comment').value,
+				date: date.toDateString(),
+				time: date.toLocaleTimeString(),
+				used: counter
+			});
+			database.set(comments);
+		}
+
+		number.addEventListener("input", function(){
+			counter++;
+			var num = document.getElementById("input").value;
+			if(num.length>0){
+				if(num>=0 && num<200){
+					output.innerHTML = facts[num];
+				}
+				else{
+					output.innerHTML = "Sorry no facts for number greater than 199 or less than 0";
+				}
+			}
+			else{
+				output.innerHTML = "Random fact for that number will appear here...";
+			}
+		}, false);
+
+		function loadComments(comments){
+			var str = '<ul style="padding-left: 0; list-style-type: none;">';
+			comments.forEach(function(comment){
+				str += `
+					<li>
+						<h3>${comment['name']}</h3>
+						Date: ${comment['date']} 
+						<br>Time: ${comment['time']}
+						<p>${comment['comment']}</p>
+
+					</li><hr>
+				`;
+			});
+			str+="</ul>";
+			commentsDisplay.innerHTML = str;
+		}
+	</script>
+</body>
+</html>

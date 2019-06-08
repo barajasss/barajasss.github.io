@@ -1,0 +1,45 @@
+<!-- Written By Baraja Swargiary 28/11/18 -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tower Of Hanoi</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="TOHStyle.css" rel="stylesheet" type="text/css">
+	<link href="dialog.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<h1>Tower Of Hanoi</h1>
+	<h2 id="display">Moves: 0</h2>
+	<h2 id="display2">Target: 0</h2>
+	<h2 id="timeDisplay">00 : 00 : 00</h2>
+	<div class="container">
+		<div id="pole1" class="pole">
+		</div>
+		<div id="pole2" class="pole">
+		</div>
+		<div id="pole3" class="pole">
+		</div>
+	</div>
+	<div id="buttons">
+		<button id="up">Up</button>
+		<br>
+		<button id="left">Left</button>
+		<button id="down">Down</button>
+		<button id="right">Right</button>
+	</div>
+
+	<div id="dialogOverlay">
+		<div id="dialogBox">
+			<div id="dialogHead">
+			</div>
+			<div id="dialogBody">
+			</div>
+			<div id="dialogFooter">
+			</div>
+		</div>
+	</div>
+
+	<script src="dialog.js"></script>
+	<script src="TOHScript2.js"></script>
+</body>
+</html>

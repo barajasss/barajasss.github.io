@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Speed Typing Game</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link id="stylesheet" href="daymode.css" rel="stylesheet">
+	<style>
+		body{
+			transition: background-color 0.2s linear;
+		}
+		@media screen and (min-width: 600px){
+			div.card{
+				width: 50%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<h1>Speed Typing Game</h1>
+	<div id="board" class="card">
+		<div id="word-display">
+			Type it
+		</div>
+		<input id="input" type="text" autofocus>
+	</div>
+	<div id="status" class="card">
+		Time: <span id="time-display">5</span>s
+		<br><br> 
+		Points: <span id="score-display">0</span>
+	</div>
+	<div id="nightmode-control" class="card">
+		Nightmode
+		<div id="switch-container">
+			<div id="switch">
+			</div>
+		</div>
+	</div>
+	<div id="hint">
+		Start typing to begin and type the words shown above the input box
+	</div>
+	<script src="script.js"></script> 
+</body>
+</html>

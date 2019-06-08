@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Piano</title>
+<style>
+	body{
+		background-color: #3a3;
+		text-align: center;
+	}
+	h1{
+		width: 950px;
+		margin: 0px auto;
+		color: white;
+		border: 12px groove white;
+		font-size: 30px;
+		background-color: #261;
+		padding: 10px;
+		border-radius: 15px;
+	}
+	#piano{
+		height: 400px;
+		width: 974px;
+		background-color: black;
+		margin: 20px auto;
+		padding: 10px;
+		position: relative;
+		border-radius: 10px;
+		box-shadow: 0px 10px 10px 10px black;
+	}
+	#controls{
+		height: 130px;
+		width: 800px;
+		margin: 0px auto;
+		margin-top: 10px;
+		border-radius: 10px;
+		background-color: #333;
+		position: relative;
+		box-shadow: 0px 7px 7px 7px #111;
+	}
+	#display{
+		height: 70px;
+		width: 150px;
+		background-color: yellow;
+		color: #352;
+		font-size: 50px;
+		padding-top: 7px;
+		position: absolute;
+		border-radius: 5px;
+		transition: 0.5s;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		box-shadow: 0px 5px 3px 0px black;
+	}
+	#speaker1{
+		height: 110px;
+		width: 150px;
+		background-color: #111;
+		position: absolute;
+		top:50%;
+		left: 10px;
+		border-radius: 10px;
+		transform: translatey(-50%);
+	}
+	#speaker2{
+		height: 110px;
+		width: 150px;
+		background-color: #111;
+		position: absolute;
+		top:50%;
+		right: 10px;
+		border-radius: 10px;
+		transform: translatey(-50%);
+	}
+	.keys{
+		border-radius: 9px;
+		box-shadow: 0px 16px 0px 0px #222;
+		top: 170px;
+		transition: 0.5s;
+	}
+	.white{
+		width: 68px;
+		height: 220px;
+		background-color: white;
+		margin: 1px;
+		position: absolute;
+		left: 800px;
+	}
+	.black{
+		width: 40px;
+		height: 135px;
+		background-color: black;
+		margin: 1px;
+		position: absolute;
+		z-index: 1;
+		left: 800px;
+	}
+	.white:hover{
+		background-color: #5d5;
+	}
+	.black:hover{
+		background-color: #35e;
+	}
+	#blackkey11{
+		left: 65px;
+	}
+	#blackkey12{
+		left: 148px;
+	}
+	#blackkey13{
+		left: 282px;
+	}
+	#blackkey14{
+		left: 362px;
+	}
+	#blackkey15{
+		left: 442px;
+	}
+	#blackkey21{
+		left: 576px;
+	}
+	#blackkey22{
+		left: 657px;
+	}
+	#blackkey23{
+		left: 795px;
+	}
+	#blackkey24{
+		left: 875px;
+	}
+
+	#whitekey11{
+		left: 20px;
+	}
+	#whitekey12{
+		left: 93px;
+	}
+	#whitekey13{
+		left: 166px;
+	}
+	#whitekey14{
+		left: 239px;
+	}
+	#whitekey15{
+		left: 312px;
+	}
+	#whitekey16{
+		left: 385px;
+	}
+	#whitekey17{
+		left: 458px;
+	}
+	#whitekey21{
+		left: 531px;
+	}
+	#whitekey22{
+		left: 604px;
+	}
+	#whitekey23{
+		left: 677px;
+	}
+	#whitekey24{
+		left: 750px;
+	}
+	#whitekey25{
+		left: 823px;
+	}
+	#whitekey26{
+		left: 896px;
+	}
+	@media screen and (max-width: 500px){
+		body{
+			background: yellow;
+		}
+		#piano{
+			width: 90%;
+		}
+	}
+</style>
+</head>
+<body>
+	<h1>PIANO</h1>
+<div id="piano">
+	<div id="controls">
+		<div id="speaker1">
+		</div>
+		<div id="display">
+		</div>
+		<div id="speaker2">
+		</div>
+	</div>
+	<div id="keys">
+		<!--octave 1-->
+		<div id="blackkey11" class="black keys" onclick="playKey(this, 'blackkey11')" onmouseover="display(this, 'C#')">
+		</div>
+		<div id="blackkey12" class="black keys" onclick="playKey(this, 'blackkey12')" onmouseover="display(this, 'D#')">
+		</div>
+		<div id="blackkey13" class="black keys" onclick="playKey(this, 'blackkey13')" onmouseover="display(this, 'F#')">
+		</div>
+		<div id="blackkey14" class="black keys" onclick="playKey(this, 'blackkey14')" onmouseover="display(this, 'G#')">
+		</div>
+		<div id="blackkey15" class="black keys" onclick="playKey(this, 'blackkey15')" onmouseover="display(this, 'A#')">
+		</div>
+		<div id="whitekey11" class="white keys" onclick="playKey(this, 'whitekey11')" onmouseover="display(this, 'C')">
+		</div>
+		<div id="whitekey12" class="white keys" onclick="playKey(this, 'whitekey12')" onmouseover="display(this, 'D')">
+		</div>
+		<div id="whitekey13" class="white keys" onclick="playKey(this, 'whitekey13')" onmouseover="display(this, 'E')">
+		</div>
+		<div id="whitekey14" class="white keys" onclick="playKey(this, 'whitekey14')" onmouseover="display(this, 'F')">
+		</div>
+		<div id="whitekey15" class="white keys" onclick="playKey(this, 'whitekey15')" onmouseover="display(this, 'G')">
+		</div>
+		<div id="whitekey16" class="white keys" onclick="playKey(this, 'whitekey16')" onmouseover="display(this, 'A')">
+		</div>
+		<div id="whitekey17" class="white keys" onclick="playKey(this, 'whitekey17')" onmouseover="display(this, 'B')">
+		</div>
+		<!--octave 2-->
+		<div id="blackkey21" class="black keys" onclick="playKey(this, 'blackkey21')" onmouseover="display(this, 'C#')">
+		</div>
+		<div id="blackkey22" class="black keys" onclick="playKey(this, 'blackkey22')" onmouseover="display(this, 'D#')">
+		</div>
+		<div id="blackkey23" class="black keys" onclick="playKey(this, 'blackkey23')" onmouseover="display(this, 'F#')">
+		</div>
+		<div id="blackkey24" class="black keys" onclick="playKey(this, 'blackkey24')" onmouseover="display(this, 'G#')">
+		</div>
+		<div id="whitekey21" class="white keys" onclick="playKey(this, 'whitekey21')" onmouseover="display(this, 'C')">
+		</div>
+		<div id="whitekey22" class="white keys" onclick="playKey(this, 'whitekey22')" onmouseover="display(this, 'D')">
+		</div>
+		<div id="whitekey23" class="white keys" onclick="playKey(this, 'whitekey23')" onmouseover="display(this, 'E')">
+		</div>
+		<div id="whitekey24" class="white keys" onclick="playKey(this, 'whitekey24')" onmouseover="display(this, 'F')">
+		</div>
+		<div id="whitekey25" class="white keys" onclick="playKey(this, 'whitekey25')" onmouseover="display(this, 'G')">
+		</div>
+		<div id="whitekey26" class="white keys" onclick="playKey(this, 'whitekey26')" onmouseover="display(this, 'A')">
+		</div>
+	</div>
+</div>
+<script>
+	/*five audio files are created for a single piano key because we need to hear sound on clicking
+	the same key multiple times*/
+	//for white keys
+	var c11=new Audio();
+	var c12=new Audio();
+	var c13=new Audio();
+	var c14=new Audio();
+	var c15=new Audio();
+	var d11=new Audio();
+	var d12=new Audio();
+	var d13=new Audio();
+	var d14=new Audio();
+	var d15=new Audio();
+	var e11=new Audio();
+	var e12=new Audio();
+	var e13=new Audio();
+	var e14=new Audio();
+	var e15=new Audio();
+	var f11=new Audio();
+	var f12=new Audio();
+	var f13=new Audio();
+	var f14=new Audio();
+	var f15=new Audio();
+	var g11=new Audio();
+	var g12=new Audio();
+	var g13=new Audio();
+	var g14=new Audio();
+	var g15=new Audio();
+	var a11=new Audio();
+	var a12=new Audio();
+	var a13=new Audio();
+	var a14=new Audio();
+	var a15=new Audio();
+	var b11=new Audio();
+	var b12=new Audio();
+	var b13=new Audio();
+	var b14=new Audio();
+	var b15=new Audio();
+	var c21=new Audio();
+	var c22=new Audio();
+	var c23=new Audio();
+	var c24=new Audio();
+	var c25=new Audio();
+	var d21=new Audio();
+	var d22=new Audio();
+	var d23=new Audio();
+	var d24=new Audio();
+	var d25=new Audio();
+	var e21=new Audio();
+	var e22=new Audio();
+	var e23=new Audio();
+	var e24=new Audio();
+	var e25=new Audio();
+	var f21=new Audio();
+	var f22=new Audio();
+	var f23=new Audio();
+	var f24=new Audio();
+	var f25=new Audio();
+	var g21=new Audio();
+	var g22=new Audio();
+	var g23=new Audio();
+	var g24=new Audio();
+	var g25=new Audio();
+	var a21=new Audio();
+	var a22=new Audio();
+	var a23=new Audio();
+	var a24=new Audio();
+	var a25=new Audio();
+	c11.src="sounds/c1.wav";
+	c12.src="sounds/c1.wav";
+	c13.src="sounds/c1.wav";
+	c14.src="sounds/c1.wav";
+	c15.src="sounds/c1.wav";
+	d11.src="sounds/d1.wav";
+	d12.src="sounds/d1.wav";
+	d13.src="sounds/d1.wav";
+	d14.src="sounds/d1.wav";
+	d15.src="sounds/d1.wav";
+	e11.src="sounds/e1.wav";
+	e12.src="sounds/e1.wav";
+	e13.src="sounds/e1.wav";
+	e14.src="sounds/e1.wav";
+	e15.src="sounds/e1.wav";
+	f11.src="sounds/f1.wav";
+	f12.src="sounds/f1.wav";
+	f13.src="sounds/f1.wav";
+	f14.src="sounds/f1.wav";
+	f15.src="sounds/f1.wav";
+	g11.src="sounds/g1.wav";
+	g12.src="sounds/g1.wav";
+	g13.src="sounds/g1.wav";
+	g14.src="sounds/g1.wav";
+	g15.src="sounds/g1.wav";
+	a11.src="sounds/a1.wav";
+	a12.src="sounds/a1.wav";
+	a13.src="sounds/a1.wav";
+	a14.src="sounds/a1.wav";
+	a15.src="sounds/a1.wav";
+	b11.src="sounds/b1.wav";
+	b12.src="sounds/b1.wav";
+	b13.src="sounds/b1.wav";
+	b14.src="sounds/b1.wav";
+	b15.src="sounds/b1.wav";
+	c21.src="sounds/c2.wav";
+	c22.src="sounds/c2.wav";
+	c23.src="sounds/c2.wav";
+	c24.src="sounds/c2.wav";
+	c25.src="sounds/c2.wav";
+	d21.src="sounds/d2.wav";
+	d22.src="sounds/d2.wav";
+	d23.src="sounds/d2.wav";
+	d24.src="sounds/d2.wav";
+	d25.src="sounds/d2.wav";
+	e21.src="sounds/e2.wav";
+	e22.src="sounds/e2.wav";
+	e23.src="sounds/e2.wav";
+	e24.src="sounds/e2.wav";
+	e25.src="sounds/e2.wav";
+	f21.src="sounds/f2.wav";
+	f22.src="sounds/f2.wav";
+	f23.src="sounds/f2.wav";
+	f24.src="sounds/f2.wav";
+	f25.src="sounds/f2.wav";
+	g21.src="sounds/g2.wav";
+	g22.src="sounds/g2.wav";
+	g23.src="sounds/g2.wav";
+	g24.src="sounds/g2.wav";
+	g25.src="sounds/g2.wav";
+	a21.src="sounds/a2.wav";
+	a22.src="sounds/a2.wav";
+	a23.src="sounds/a2.wav";
+	a24.src="sounds/a2.wav";
+	a25.src="sounds/a2.wav";
+	var c1=1;
+	var d1=1;
+	var e1=1;
+	var f1=1;
+	var g1=1;
+	var a1=1;
+	var b1=1;
+	var c2=1;
+	var d2=1;
+	var e2=1;
+	var f2=1;
+	var g2=1;
+	var a2=1;
+
+	//for black keys
+	var csharp11=new Audio();
+	var dsharp11=new Audio();
+	var fsharp11=new Audio();
+	var gsharp11=new Audio();
+	var asharp11=new Audio();
+	var csharp12=new Audio();
+	var dsharp12=new Audio();
+	var fsharp12=new Audio();
+	var gsharp12=new Audio();
+	var asharp12=new Audio();
+	var csharp13=new Audio();
+	var dsharp13=new Audio();
+	var fsharp13=new Audio();
+	var gsharp13=new Audio();
+	var asharp13=new Audio();
+	var csharp14=new Audio();
+	var dsharp14=new Audio();
+	var fsharp14=new Audio();
+	var gsharp14=new Audio();
+	var asharp14=new Audio();
+	var csharp15=new Audio();
+	var dsharp15=new Audio();
+	var fsharp15=new Audio();
+	var gsharp15=new Audio();
+	var asharp15=new Audio();
+
+	var csharp21=new Audio();
+	var dsharp21=new Audio();
+	var fsharp21=new Audio();
+	var gsharp21=new Audio();
+	var csharp22=new Audio();
+	var dsharp22=new Audio();
+	var fsharp22=new Audio();
+	var gsharp22=new Audio();
+	var csharp23=new Audio();
+	var dsharp23=new Audio();
+	var fsharp23=new Audio();
+	var gsharp23=new Audio();
+	var csharp24=new Audio();
+	var dsharp24=new Audio();
+	var fsharp24=new Audio();
+	var gsharp24=new Audio();
+	var csharp25=new Audio();
+	var dsharp25=new Audio();
+	var fsharp25=new Audio();
+	var gsharp25=new Audio();
+	csharp11.src="sounds/csharp1.wav";
+	dsharp11.src="sounds/dsharp1.wav";
+	fsharp11.src="sounds/fsharp1.wav";
+	gsharp11.src="sounds/gsharp1.wav";
+	asharp11.src="sounds/asharp1.wav";
+	csharp12.src="sounds/csharp1.wav";
+	dsharp12.src="sounds/dsharp1.wav";
+	fsharp12.src="sounds/fsharp1.wav";
+	gsharp12.src="sounds/gsharp1.wav";
+	asharp12.src="sounds/asharp1.wav";
+	csharp13.src="sounds/csharp1.wav";
+	dsharp13.src="sounds/dsharp1.wav";
+	fsharp13.src="sounds/fsharp1.wav";
+	gsharp13.src="sounds/gsharp1.wav";
+	asharp13.src="sounds/asharp1.wav";
+	csharp14.src="sounds/csharp1.wav";
+	dsharp14.src="sounds/dsharp1.wav";
+	fsharp14.src="sounds/fsharp1.wav";
+	gsharp14.src="sounds/gsharp1.wav";
+	asharp14.src="sounds/asharp1.wav";
+	csharp15.src="sounds/csharp1.wav";
+	dsharp15.src="sounds/dsharp1.wav";
+	fsharp15.src="sounds/fsharp1.wav";
+	gsharp15.src="sounds/gsharp1.wav";
+	asharp15.src="sounds/asharp1.wav";
+	csharp21.src="sounds/csharp2.wav";
+	dsharp21.src="sounds/dsharp2.wav";
+	fsharp21.src="sounds/fsharp2.wav";
+	gsharp21.src="sounds/gsharp2.wav";
+	csharp22.src="sounds/csharp2.wav";
+	dsharp22.src="sounds/dsharp2.wav";
+	fsharp22.src="sounds/fsharp2.wav";
+	gsharp22.src="sounds/gsharp2.wav";
+	csharp23.src="sounds/csharp2.wav";
+	dsharp23.src="sounds/dsharp2.wav";
+	fsharp23.src="sounds/fsharp2.wav";
+	gsharp23.src="sounds/gsharp2.wav";
+	csharp24.src="sounds/csharp2.wav";
+	dsharp24.src="sounds/dsharp2.wav";
+	fsharp24.src="sounds/fsharp2.wav";
+	gsharp24.src="sounds/gsharp2.wav";
+	csharp25.src="sounds/csharp2.wav";
+	dsharp25.src="sounds/dsharp2.wav";
+	fsharp25.src="sounds/fsharp2.wav";
+	gsharp25.src="sounds/gsharp2.wav";
+	var csharp1=1;
+	var dsharp1=1;
+	var fsharp1=1;
+	var gsharp1=1;
+	var asharp1=1;
+	var csharp2=1;
+	var dsharp2=1;
+	var fsharp2=1;
+	var gsharp2=1;
+	function playKey(el, id){
+		el.style.top="186px";
+		el.style.transform="scale(0.978)";
+		el.style.boxShadow="0px 0px 0px 0px #222";
+		document.getElementById("display").style.backgroundColor="red";
+		switch(id){
+			case "whitekey11":
+			if(c1==1){
+				c11.play();
+				c1++;
+			}
+			else if(c1==2){
+				c12.play();
+				c1++;
+			}
+			else if(c1==3){
+				c13.play();
+				c1++;
+			}
+			else if(c1==4){
+				c14.play();
+				c1++;
+			}
+			else if(c1==5){
+				c15.play();
+				c1=1;
+			}
+								break;
+			case "whitekey12":
+			if(d1==1){
+				d11.play();
+				d1++;
+			}
+			else if(d1==2){
+				d12.play();
+				d1++;
+			}
+			else if(d1==3){
+				d13.play();
+				d1++;
+			}
+			else if(d1==4){
+				d14.play();
+				d1++;
+			}
+			else if(d1==5){
+				d15.play();
+				d1=1;
+			}
+								break;
+			case "whitekey13":
+			if(e1==1){
+				e11.play();
+				e1++;
+			}
+			else if(e1==2){
+				e12.play();
+				e1++;
+			}
+			else if(e1==3){
+				e13.play();
+				e1++;
+			}
+			else if(e1==4){
+				e14.play();
+				e1++;
+			}
+			else if(e1==5){
+				e15.play();
+				e1=1;
+			}
+								break;
+			case "whitekey14":
+			if(f1==1){
+				f11.play();
+				f1++;
+			}
+			else if(f1==2){
+				f12.play();
+				f1++;
+			}
+			else if(f1==3){
+				f13.play();
+				f1++;
+			}
+			else if(f1==4){
+				f14.play();
+				f1++;
+			}
+			else if(f1==5){
+				f15.play();
+				f1=1;
+			}
+								break;
+			case "whitekey15":
+			if(g1==1){
+				g11.play();
+				g1++;
+			}
+			else if(g1==2){
+				g12.play();
+				g1++;
+			}
+			else if(g1==3){
+				g13.play();
+				g1++;
+			}
+			else if(g1==4){
+				g14.play();
+				g1++;
+			}
+			else if(g1==5){
+				g15.play();
+				g1=1;
+			}
+								break;
+			case "whitekey16":
+			if(a1==1){
+				a11.play();
+				a1++;
+			}
+			else if(a1==2){
+				a12.play();
+				a1++;
+			}
+			else if(a1==3){
+				a13.play();
+				a1++;
+			}
+			else if(a1==4){
+				a14.play();
+				a1++;
+			}
+			else if(a1==5){
+				a15.play();
+				a1=1;
+			}
+								break;
+			case "whitekey17":
+			if(b1==1){
+				b11.play();
+				b1++;
+			}
+			else if(b1==2){
+				b12.play();
+				b1++;
+			}
+			else if(b1==3){
+				b13.play();
+				b1++;
+			}
+			else if(b1==4){
+				b14.play();
+				b1++;
+			}
+			else if(b1==5){
+				b15.play();
+				b1=1;
+			}
+								break;
+			case "whitekey21":
+			if(c2==1){
+				c21.play();
+				c2++;
+			}
+			else if(c2==2){
+				c22.play();
+				c2++;
+			}
+			else if(c2==3){
+				c23.play();
+				c2++;
+			}
+			else if(c2==4){
+				c24.play();
+				c2++;
+			}
+			else if(c2==5){
+				c25.play();
+				c2=1;
+			}
+								break;
+			case "whitekey22":
+			if(d2==1){
+				d21.play();
+				d2++;
+			}
+			else if(d2==2){
+				d22.play();
+				d2++;
+			}
+			else if(d2==3){
+				d23.play();
+				d2++;
+			}
+			else if(d2==4){
+				d24.play();
+				d2++;
+			}
+			else if(d2==5){
+				d25.play();
+				d2=1;
+			}
+								break;
+			case "whitekey23":
+			if(e2==1){
+				e21.play();
+				e2++;
+			}
+			else if(e2==2){
+				e22.play();
+				e2++;
+			}
+			else if(e2==3){
+				e23.play();
+				e2++;
+			}
+			else if(e2==4){
+				e24.play();
+				e2++;
+			}
+			else if(e2==5){
+				e25.play();
+				e2=1;
+			}
+								break;
+			case "whitekey24":
+			if(f2==1){
+				f21.play();
+				f2++;
+			}
+			else if(f2==2){
+				f22.play();
+				f2++;
+			}
+			else if(f2==3){
+				f23.play();
+				f2++;
+			}
+			else if(f2==4){
+				f24.play();
+				f2++;
+			}
+			else if(f2==5){
+				f25.play();
+				f2=1;
+			}
+								break;
+			case "whitekey25":
+			if(g2==1){
+				g21.play();
+				g2++;
+			}
+			else if(g2==2){
+				g22.play();
+				g2++;
+			}
+			else if(g2==3){
+				g23.play();
+				g2++;
+			}
+			else if(g2==4){
+				g24.play();
+				g2++;
+			}
+			else if(g2==5){
+				g25.play();
+				g2=1;
+			}
+								break;
+			case "whitekey26":
+			if(a2==1){
+				a21.play();
+				a2++;
+			}
+			else if(a2==2){
+				a22.play();
+				a2++;
+			}
+			else if(a2==3){
+				a23.play();
+				a2++;
+			}
+			else if(a2==4){
+				a24.play();
+				a2++;
+			}
+			else if(a2==5){
+				a25.play();
+				a2=1;
+			}
+								break;
+			case "blackkey11":
+			if(csharp1==1){
+				csharp11.play();
+				csharp1++;
+			}
+			else if(csharp1==2){
+				csharp12.play();
+				csharp1++;
+			}
+			else if(csharp1==3){
+				csharp13.play();
+				csharp1++;
+			}
+			else if(csharp1==4){
+				csharp14.play();
+				csharp1++;
+			}
+			else if(csharp1==5){
+				csharp15.play();
+				csharp1=1;
+			}
+								break;
+			case "blackkey12":
+			if(dsharp1==1){
+				dsharp11.play();
+				dsharp1++;
+			}
+			else if(dsharp1==2){
+				dsharp12.play();
+				dsharp1++;
+			}
+			else if(dsharp1==3){
+				dsharp13.play();
+				dsharp1++;
+			}
+			else if(dsharp1==4){
+				dsharp14.play();
+				dsharp1++;
+			}
+			else if(dsharp1==5){
+				dsharp15.play();
+				dsharp1=1;
+			}
+								break;
+			case "blackkey13":
+			if(fsharp1==1){
+				fsharp11.play();
+				fsharp1++;
+			}
+			else if(fsharp1==2){
+				fsharp12.play();
+				fsharp1++;
+			}
+			else if(fsharp1==3){
+				fsharp13.play();
+				fsharp1++;
+			}
+			else if(fsharp1==4){
+				fsharp14.play();
+				fsharp1++;
+			}
+			else if(fsharp1==5){
+				fsharp15.play();
+				fsharp1=1;
+			}
+								break;
+			case "blackkey14":
+			if(gsharp1==1){
+				gsharp11.play();
+				gsharp1++;
+			}
+			else if(gsharp1==2){
+				gsharp12.play();
+				gsharp1++;
+			}
+			else if(gsharp1==3){
+				gsharp13.play();
+				gsharp1++;
+			}
+			else if(gsharp1==4){
+				gsharp14.play();
+				gsharp1++;
+			}
+			else if(gsharp1==5){
+				gsharp15.play();
+				gsharp1=1;
+			}
+								break;
+			case "blackkey15":
+			if(asharp1==1){
+				asharp11.play();
+				asharp1++;
+			}
+			else if(asharp1==2){
+				asharp12.play();
+				asharp1++;
+			}
+			else if(asharp1==3){
+				asharp13.play();
+				asharp1++;
+			}
+			else if(asharp1==4){
+				asharp14.play();
+				asharp1++;
+			}
+			else if(asharp1==5){
+				asharp15.play();
+				asharp1=1;
+			}
+								break;
+			case "blackkey21":
+			if(csharp2==1){
+				csharp21.play();
+				csharp2++;
+			}
+			else if(csharp2==2){
+				csharp22.play();
+				csharp2++;
+			}
+			else if(csharp2==3){
+				csharp23.play();
+				csharp2++;
+			}
+			else if(csharp2==4){
+				csharp24.play();
+				csharp2++;
+			}
+			else if(csharp2==5){
+				csharp25.play();
+				csharp2=1;
+			}
+								break;
+			case "blackkey22":
+			if(dsharp2==1){
+				dsharp21.play();
+				dsharp2++;
+			}
+			else if(dsharp2==2){
+				dsharp22.play();
+				dsharp2++;
+			}
+			else if(dsharp2==3){
+				dsharp23.play();
+				dsharp2++;
+			}
+			else if(dsharp2==4){
+				dsharp24.play();
+				dsharp2++;
+			}
+			else if(dsharp2==5){
+				dsharp25.play();
+				dsharp2=1;
+			}
+								break;
+			case "blackkey23":
+			if(fsharp2==1){
+				fsharp21.play();
+				fsharp2++;
+			}
+			else if(fsharp2==2){
+				fsharp22.play();
+				fsharp2++;
+			}
+			else if(fsharp2==3){
+				fsharp23.play();
+				fsharp2++;
+			}
+			else if(fsharp2==4){
+				fsharp24.play();
+				fsharp2++;
+			}
+			else if(fsharp2==5){
+				fsharp25.play();
+				fsharp2=1;
+			}
+								break;
+			case "blackkey24":
+			if(gsharp2==1){
+				gsharp21.play();
+				gsharp2++;
+			}
+			else if(gsharp2==2){
+				gsharp22.play();
+				gsharp2++;
+			}
+			else if(gsharp2==3){
+				gsharp23.play();
+				gsharp2++;
+			}
+			else if(gsharp2==4){
+				gsharp24.play();
+				gsharp2++;
+			}
+			else if(gsharp2==5){
+				gsharp25.play();
+				gsharp2=1;
+			}
+								break;
+		}
+		setTimeout(function(){
+			el.style.top="170px";
+			el.style.transform="scale(1)";
+			el.style.boxShadow="0px 16px 0px 0px #222";
+			document.getElementById("display").style.backgroundColor="yellow";
+		}, 200);
+	}
+	function display(el, note){
+		document.getElementById("display").innerHTML=note;
+	}
+	//keyboard keypress event listeners
+	document.addEventListener("keydown", function(e){
+		if(e.keyCode==65){
+			document.getElementById("whitekey11").style.top="180px";
+			document.getElementById("whitekey11").style.boxShadow="0px 0px 0px 0px #222";
+			document.getElementById("display").style.backgroundColor="red";
+			setTimeout(function(){
+				document.getElementById("whitekey11").style.top="170px";
+				document.getElementById("whitekey11").style.boxShadow="0px 10px 0px 0px #222";
+				document.getElementById("display").style.backgroundColor="yellow";
+			}, 200);
+		}
+	}, false);
+</script>
+</body>
+</html>

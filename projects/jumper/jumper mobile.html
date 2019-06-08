@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jumper</title>
+
+	<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-database.js"></script>
+	<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBNYaR3WmGbCj404iOKatIvpFmHTXe7u_c",
+    authDomain: "mini-runner.firebaseapp.com",
+    databaseURL: "https://mini-runner.firebaseio.com",
+    projectId: "mini-runner",
+    storageBucket: "mini-runner.appspot.com",
+    messagingSenderId: "229978897253"
+  };
+  firebase.initializeApp(config);
+</script>
+
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link href="manifest.json" rel="manifest">
+	<meta name="theme-color" content="orange">
+	<style>
+		body{
+			text-align: center;
+			background-color: orange;
+		}
+		canvas{
+			border: 2px solid white;
+			border-radius: 5px;
+			background-image: url("background.jpg");
+			background-size: cover;
+			box-sizing: border-box;
+		}
+		div#container{
+			position: relative;
+			display: inline-block;
+			overflow: hidden;
+		}
+		button#startBtn{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			padding: 10px;
+			border: 1px solid black;
+			border-radius: 10px;
+			outline: none;
+			transition: 0.8s;
+		}
+		button#startBtn:hover{
+			background-color: lightgreen;
+			cursor: pointer;
+		}
+		button#restartBtn{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			display: none;
+			padding: 10px;
+			border: 1px solid black;
+			border-radius: 10px;
+			outline: none;
+			transition: 0.8s;
+		}
+		button#restartBtn:hover{
+			background-color: lightgreen;
+			cursor: pointer;
+		}
+		h2#help{
+			width: 100%;
+			position: absolute;
+			top: 25px;
+			text-align: center;
+			text-shadow: 1px 1px 1px black;
+			color: white;
+			transition: 0.8s;
+		}
+		h1{
+			color: white;
+			text-shadow: 1px 1px 1px black;
+		}
+		p{
+			color: white;
+			font-size: 12px;
+		}
+		@media screen and (max-width: 500px){
+			canvas{
+				width: 100%;
+				height: 100%;
+			}
+		}
+	</style>
+</head>
+<body>
+	<h1>Mini Runner Mobile</h1>
+	<div id="container">
+		<h2 id="help">Controls: Tap or click to jump...</h2>
+		<canvas id="canvas" width="500px" height="450px">
+		</canvas>
+		<button id="startBtn">Start Game</button>
+		<button id="restartBtn">Restart Game</button>
+		<p id="display">Made By Baraja Swargiary from Cotton University 2nd Sem CSIT, 2019.</p>
+	</div>
+	<script>
+		const backgroundMusic = new Audio();
+		backgroundMusic.src = "mario.mp3";
+		backgroundMusic.loop = true;
+
+		var startBtn = document.getElementById("startBtn");
+		var restartBtn = document.getElementById("restartBtn");
+		var display = document.getElementById("display");
+		var help = document.getElementById("help");
+
+		var database = firebase.database().ref('highscore');
+		var visitors = firebase.database().ref('visitors');
+		var visits;
+		var highscore;
+		
+		visitors.once('value', function(snapshot){
+			visits = snapshot.val();
+			visits++;
+			visitors.set(visits);
+			display.innerHTML += '<br>Number of visitors: ' + visits;
+		})
+		database.on('value', function(snapshot){
+			highscore = snapshot.val();
+			console.log(highscore);
+		})
+		
+
+		function updateScore(){
+			var condition1 = character.x > poles[0].x+pole.width; 
+			var condition2 = poles[0].x+pole.width > character.x-4;
+			var condition3 = character.dead == false;
+			if( condition1 && condition2 && condition3){
+				character.score++;
+			}
+		}
+
+		startBtn.addEventListener("click", function(){
+			game();
+			backgroundMusic.play();
+			startBtn.style.transform = "translate(-50%, 800%)";
+			help.style.transform = "translate(0%, -800%)";
+		}, false);
+		restartBtn.addEventListener("click", function(){
+			restartBtn.style.display = "none";
+			backgroundMusic.play();
+			init();
+			game();
+		}, false);
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext('2d');
+		var slowDownGravity = 130;
+		var groundOffset = 100;
+		var pole = {
+			x: canvas.width,
+			y: canvas.height-groundOffset,
+			width: 15,
+			speed: 3,
+			color: 'blue'
+		};
+		var poles = [
+			createPole(50, 100)
+		];
+		var character = {
+			x: 85,
+			y: canvas.height-(45+groundOffset),
+			width: 30,
+			height: 45,
+			color: 'red',
+			jump: 250,
+			score: 0, 
+			dead: false,
+			onGround: true
+		};
+		//cIO: characterImageObject
+		var cIO = {
+			cX: 0,
+			cY: 0,
+			cWidth: 100,
+			cHeight: 150,
+			width: character.width+30,
+			height: character.height+30
+		}
+		var characterImage = new Image();
+		characterImage.src = 'character.png';
+		var poleImage = new Image();
+		poleImage.src = 'pole.png';
+
+
+
+		function game(){
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			draw();
+			checkCollision();
+			updateScore();
+			if(character.dead){
+				backgroundMusic.pause();
+				backgroundMusic.currentTime = 0;
+				gameOver();
+				return;
+			}
+			requestAnimationFrame(game);
+		}
+		function init(){
+			pole = {
+				x: canvas.width,
+				y: canvas.height-groundOffset,
+				width: 15,
+				speed: 3,
+				color: 'blue'
+			};
+			poles = [
+				createPole(50, 100)
+			];
+			character = {
+				x: 85,
+				y: canvas.height-(45+groundOffset),
+				width: 30,
+				height: 45,
+				color: 'red',
+				jump: 250,
+				score: 0, 
+				dead: false,
+				onGround: true
+			};
+			//cIO: characterImageObject
+			cIO = {
+				cX: 0,
+				cY: 0,
+				cWidth: 100,
+				cHeight: 150,
+				width: character.width+30,
+				height: character.height+30
+			}
+		}
+
+		function draw(){
+			//draw score
+			ctx.fillStyle="white";
+			ctx.font="20px monotype";
+			ctx.fillText(`Score: ${character.score}`, 10, 30);
+
+			/*draw poles
+			ctx.fillStyle = pole.color;
+			for(var i=0; i<poles.length; i++){
+				ctx.fillRect(poles[i].x, pole.y-poles[i].height, pole.width, poles[i].height);
+				poles[i].x -= pole.speed;
+			}
+			*/
+			for(var i=0; i<poles.length; i++){
+				ctx.drawImage(poleImage, poles[i].x, pole.y-poles[i].height-10, pole.width+30, poles[i].height+10);
+				poles[i].x -= pole.speed;
+			}
+
+
+			//draw character after poles to make zIndex of character appear more
+			/*
+			ctx.fillStyle = character.color;
+			ctx.fillRect(character.x, character.y, character.width, character.height);
+			*/
+			drawCharacter();
+
+			//pull down gravity
+			var interval1 = setInterval(function(){
+				if(character.y < canvas.height-(character.height+groundOffset)){
+					character.y++;
+				}
+				else{
+					character.onGround = true;
+					clearInterval(interval1);
+				}
+			}, slowDownGravity);
+
+			var randDist = Math.floor(Math.random()*130)+100;
+			//insert a new pole and pop the pole which has passed away
+			if(poles[poles.length-1].x < randDist){
+				poles.push(createPole(50, 90));
+				if(poles[0].x < 50){
+					poles.shift();
+				}
+			}
+		}
+		function checkCollision(){
+			var condition1 =	(character.x + character.width > poles[0].x) 
+								&& 
+								(character.x < poles[0].x + pole.width);
+			var condition2 = 	((character.y + character.height) > pole.y-poles[0].height);
+			if( condition1 && condition2 ){
+				character.dead = true;
+			}
+			else{
+			}
+		}
+		function drawCharacter(){
+			ctx.drawImage(
+				characterImage, 
+				cIO.cX, 
+				cIO.cY,
+				cIO.cWidth, 
+				cIO.cHeight, 
+				character.x, 
+				character.y-23, 
+				cIO.width, 
+				cIO.height
+			);
+		}
+		setInterval(function(){
+			cIO.cX += 101;
+			if(cIO.cX >= 810){
+				cIO.cX = 0;
+			}
+		}, 100);
+		function createPole(minHeight, maxHeight){
+			return {
+				x: pole.x,
+				height: Math.floor(Math.random()*(maxHeight-minHeight+1))+minHeight	
+			}
+		}
+		function gameOver(){
+			if(character.score > highscore.score){
+				highscore.name = prompt("You made highscore!! Enter your name: ");
+				highscore.score = character.score;
+				database.set(highscore);
+			}
+			restartBtn.style.display = "inline";
+			ctx.fillStyle = "#333";
+			ctx.font = "26px arial";
+			ctx.fillText("Your score is "+character.score, 165, 74);
+			ctx.fillText("Highscore: "+highscore.score, 180, 100);
+			ctx.fillText(" by ", 250, 130);
+			ctx.fillText(highscore.name, 180, 160);
+		}
+		document.addEventListener("keydown",  function(e){
+			jump();
+		}, false);
+		document.addEventListener("click",  function(e){
+			jump();
+		}, false);
+		document.addEventListener("touchstart",  function(e){
+			jump();
+		}, false);
+		function jump(){
+			if(character.onGround == true){
+				var interval2 = setInterval(function(){
+					if(character.y+character.height > canvas.height-character.jump){
+						character.y -= 5;
+					}
+					else{
+						clearInterval(interval2);
+					}
+				}, 5);
+			}
+			character.onGround = false;
+		}
+	</script>
+</body>
+</html>

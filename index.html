@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Animate CSS</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="theme-color" content="teal">
+
+
+	<link rel="icon" href="assets/logos/baraja portfolio icon.png">
+	<link href="dependencies/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="dependencies/animate.css" type="text/css" rel="stylesheet">
+	<link href="css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+
+	<!-- NAVBAR -->
+
+	<div class="navbar navbar-expand-md navbar-dark fixed-top">
+		<a class="navbar-brand" href="https://barajasss.github.io">
+			Baraja Swargiary
+		</a>
+		<button class="navbar-toggler none" data-toggle="collapse" data-target="#my-navbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse  justify-content-end" id="my-navbar">
+			<ul class="navbar-nav">
+				<li class="nav-item active">
+					<a class="nav-link" href="index.html">
+						Home
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="contact.html">
+						Contact
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="resume.pdf">
+						Download Resume
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- CAROUSEL -->
+
+	<div class="carousel slide" data-ride="carousel" id="my-carousel">
+		<ol class="carousel-indicators">
+			<li data-slide-to="0" data-target="#my-carousel" class="active"></li>
+			<li data-slide-to="1" data-target="#my-carousel"></li>
+			<li data-slide-to="2" data-target="#my-carousel"></li>
+		</ol>
+		<div class="carousel-inner">
+			<div id="intro-carousel-item" class="carousel-item active align-items-center" style="background-color: teal">
+				<div class="row no-gutters">
+					<div class="col-md">
+						<img src="assets/baraja swargiary profile pic.jpg" class="img-fluid rounded-circle" style="width: 250px; height: 250px; box-shadow: 3px 3px 15px 4px #111">
+					</div>
+					<div class="col-md">
+						<h1 class="animated bounceInRight text-left" style="animation-delay: 0.8s;">
+							Hi, I am Baraja Swargiary
+						</h1>
+						<h3 id="small-intro" class="animated bounceInUp  text-left mt-5" style="animation-delay: 1.5s;">
+							A BSc(comp science) student 
+							<br>from Cotton University, Guwahati
+						</h3>
+					</div>
+				</div>
+			</div>
+			<div class="carousel-item" style="background-color: dodgerblue">
+				<h1 class="animated swing" style="animation-delay: 0.8s;">
+					I like building and developing websites.
+				</h1>
+				<h3 class="animated lightSpeedIn mt-5" style="animation-delay: 1.5s;">
+					I also like trying out new technologies.
+				</h3>
+			</div>
+			<div class="carousel-item" style="background-color: darkgreen">
+				<h1 class="animated zoomInRight" style="animation-delay: 0.8s;">
+					I am a modern web developer.
+				</h1>
+				<h3 class="animated zoomInLeft mt-5" style="animation-delay: 1.5s;">
+					I always build responsive websites with decent UI and UX.
+				</h3>
+			</div>
+		</div>
+		<a class="carousel-control-prev" href="#my-carousel" data-slide="prev">
+			<span class="carousel-control-prev-icon"></span>
+		</a>
+		<a class="carousel-control-next" href="#my-carousel" data-slide="next">
+			<span class="carousel-control-next-icon"></span>
+		</a>
+	</div>
+
+
+	<div class="container-fluid p-3" style="background-image: url('assets/images/mountains.jpg'); background-attachment: fixed;background-size: cover;
+		background-repeat: no-repeat;">
+
+		<div class="card-deck">
+			<div class="card">
+				<img src="assets/images/laptop.jpg" class="card-img-top">
+				<div class="card-body">
+					<h4 class="scroll-animation card-title" style="animation-delay: 0.6s">
+						Creative and Innovative 
+					</h4>
+					<p class="card-text">
+						<ul>
+							<li>
+								I always love creativity
+							</li>
+						</ul>
+					</p>
+				</div>
+			</div>
+			<div class="card">
+				<img src="assets/images/paper notes.jpg" class="card-img-top">
+				<div class="card-body">
+					<h4 class="scroll-animation card-title" style="animation-delay: 1.2s">
+						Cool and stylish
+					</h4>
+					<p class="card-text">
+						<ul>
+							<li>
+								I never like to stop until the design is cool.
+							</li>
+						</ul>
+					</p>
+				</div>
+			</div>
+			<div class="card">
+				<img src="assets/images/paper.jpg" class="card-img-top">
+				<div class="card-body">
+					<h4 class="scroll-animation card-title" style="animation-delay: 2s">
+						Modern Design
+					</h4>
+					<p class="card-text">
+						<ul>
+							<li>
+								I like to build modern sites.
+							</li>
+						</ul>
+					</p>
+				</div>
+			</div>
+		</div>
+
+	</div><!-- CONTAINER -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div class="jumbotron jumbotron-fluid text-white" style="background-color: orange; 
+		clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%)">
+		<div class="container pb-4">
+			<h1 class="text-center scroll-animation" id="projects-title" data-animation="fadeIn" style="visibility: hidden;">Personal Projects</h1>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md pt-5 project-container">
+				<h2>Number System Converter</h2>
+				<a href="projects/number system converter app/index.html" target="_blank">
+					<img class="img-fluid my-2 project-image" src="projects/number system converter app/icon.png" alt="number system converter">
+				</a>
+				<p class="h6">
+					Convert number systems from binary to hexadecimial or decimal to binary etc.
+					Easy to use. Used materialize.css and vue.js as frameworks.
+				</p>
+			</div>
+			<div class="col-md pt-5 project-container">
+				<h2>Tower of Hanoi</h2>
+				<a href="projects/Tower of hanoi/index.html" target="_blank">
+					<img class="img-fluid my-2 project-image" src="projects/Tower of hanoi/icon.png" alt="tower of hanoi">
+				</a>
+				<p class="h6">
+					Tower of hanoi game made using javascript. This game can be played with keyboard. No frameworks used.
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md pt-5 project-container">
+				<h2>Cute Piano</h2>
+				<a href="projects/cute piano/index.html" target="_blank">
+					<img class="img-fluid my-2 project-image" src="projects/cute piano/icon.png" alt="cute piano css3">
+				</a>
+				<p class="h6">
+					Cute Piano Designed with CSS. Piano can be played by clicking with mouse or by touching (in case of touch devices). Better experience on pc.
+				</p>
+			</div>
+			<div class="col-md pt-5 project-container">
+				<h2>Speed Typing Game</h2>
+				<a href="projects/typing game/index.html" target="_blank">
+					<img class="img-fluid my-2 project-image" src="projects/typing game/icon.png" alt="typing game javascript">
+				</a>
+				<p class="h6">
+					Test how many points you can score in this intersting speed typing game in JavaScript. PC Preferred for better experience.
+				</p>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+	<div class="jumbotron jumbotron-fluid bg-primary text-white mt-3 mb-0">
+		<div class="container">
+			<div class="row">
+				<div class="col-md">
+					<a href="https://www.freecodecamp.org/certification/barajasss/responsive-web-design" target="_blank">
+						<img class="img-fluid my-3 rounded" src="fcc/fcc certificate.png" alt="Free Code Camp Certificate">
+					</a>
+				</div>
+				<div class="col-md">
+					<h1>Free Code Camp Certificate</h1>
+					<p>
+						I got this free code camp certificate in February 2019
+						Thanks to free code camp for tutorials and training.
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md">
+					<p class="mt-3 lead">
+						I have completed several chapters in free code camp and still continuing...
+						Here are some of the free code camp projects. All are hosted in codepen.
+					</p>
+				</div>
+				<div class="col-md">
+					<h3>Free Code Camp Projects</h3>
+					<ul>
+						<li>
+							<a class="text-white" href="https://codepen.io/Baraja/full/NMZwdx/" target="_blank">Tribute Page</a>
+						</li>
+						<li>
+							<a class="text-white" href="https://codepen.io/Baraja/full/zadZbo/" target="_blank">Survey Form</a>
+						</li>
+						<li>
+							<a class="text-white" href="https://codepen.io/Baraja/full/jdBKNz" target="_blank">Product Landing Page</a>
+						</li>
+						<li>
+							<a class="text-white" href="https://codepen.io/Baraja/full/RvVjpM" target="_blank">Technical Documentation Page</a>
+						</li>
+						<li>
+							<a class="text-white" href="https://codepen.io/Baraja/full/qYeZWb/" target="_blank">Personal Portfolio Page</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="jumbotron jumbotron-fluid text-black-50 bg-light pb-1 pt-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<h1>
+						Tools and technologies
+					</h1>
+				</div>
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-sm">
+							<img src="assets/icons/html.png" class="img-fluid m-2" height="60px" width="70px">
+							<img src="assets/icons/css.png" class="img-fluid m-2" height="60px" width="70px">
+							<img src="assets/icons/js.png" class="img-fluid m-2" height="60px" width="70px">
+						</div>
+						<div class="col-sm">
+							<img src="assets/icons/php.png" class="img-fluid m-2" height="60px" width="70px">
+							<img src="assets/icons/mysql.png" class="img-fluid m-2" height="60px" width="70px">
+							<img src="assets/icons/sublime.png" class="img-fluid m-2" height="60px" width="70px">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<footer class="jumbotron jumbotron-fluid bg-dark text-white p-3">
+		<div class="container">
+			<h5 class="text-center">
+				&copy; Copyright 2019
+			</h5>
+		</div>
+	</footer>
+
+
+	<script src="dependencies/jquery.js" type="text/javascript"></script>
+
+
+	<script src="dependencies/popper.js" type="text/javascript"></script>
+
+	<script src="dependencies/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+	<script src="js/main.js">
+	</script>
+
+</body>
+</html>
