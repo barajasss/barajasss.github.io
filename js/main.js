@@ -24,7 +24,6 @@ window.addEventListener("scroll", function(){
 	for(i=0; i<scrollAnimationElements.length; i++){
 		var temp;
 		if(hasScrolledIntoView(temp = scrollAnimationElements[i])){
-			console.log(temp);
 			scrollAnimationElements[i].style.animationDuration = "1.5s";
 			if(temp.hasAttribute("data-animation")){
 				temp.classList.add("animated", temp.getAttribute("data-animation"));

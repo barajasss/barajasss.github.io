@@ -43,13 +43,6 @@ ol[class*="carousel-indicators"] li.active{
 	transform: scale(1.5);
 }
 
-div[class*="card-deck"] > *{
-	border-radius: 0;
-	border: 2px solid white;
-	background-color: transparent;
-	color: white;
-	overflow: hidden;
-}
 div.project-container:hover *{
 	color: teal;
 }
@@ -68,7 +61,6 @@ img.project-image:hover{
 
 
 
-
 /*
 
 media queries 
@@ -76,21 +68,7 @@ media queries
 */
 
 
-@media screen and (min-width: 750px){
-	div[class*="card-deck"] > *:nth-of-type(1){
-		transform: rotateZ(-30deg) scale(0.8);
-	}
-	div[class*="card-deck"] > *:nth-of-type(2){
-		transform: rotateZ(0deg);
-		clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 70% 100%, 70% 95%, 30% 95%, 30% 100%, 0% 100%);
-		border-radius: 0 0 30px 30px;
-	}
-
-	div[class*="card-deck"] > *:nth-of-type(3){
-		transform: rotateZ(30deg) scale(0.8);
-	}
-
-
+@media screen and (min-width: 750px)
 }
 
 
@@ -110,17 +88,18 @@ media queries
 @media screen and (max-width: 450px){
 	div[class*="carousel-item"] h1{
 		margin-top: 10px;
-		font-size: 1.5rem;
+		font-size: 1.8rem;
 	}
 	div[class*="carousel-item"] h3{
-		font-size: 1rem;
+		font-size: 1.2rem;
 	}
-	#intro-small{
+	#small-intro{
 		padding-top: 5px;
-		font-size: 0.8rem;
+		font-size: 1rem;
+		margin-top: 10px !important;
 	}
 	div[class*="carousel"] ol{
-		transform: translateY(-50%);
+		transform: translateY(-90%);
 	}
 }
 
