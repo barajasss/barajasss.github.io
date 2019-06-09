@@ -1,4 +1,20 @@
 
+var scrollerBtn = document.getElementById("scroller-btn");
+
+scrollerBtn.onclick = function() {
+	// code
+	let current = window.scrollY;
+	let scrollInterval = setInterval(function(){
+		if(window.scrollY > 10){
+			window.scroll(0, current);
+			current -= 60;
+		}
+		else{
+			clearInterval(scrollInterval);
+		}
+	}, 10);
+}
+
 
 $(function(){
 	$('.carousel').carousel({
@@ -21,6 +37,12 @@ function hasScrolledIntoView(el){
 
 window.addEventListener("scroll", function(){
 
+	if(window.scrollY > 500){
+		scrollerBtn.style.transform = "scale(1)";
+	}
+	else{
+		scrollerBtn.style.transform = "scale(0)";
+	}
 	for(i=0; i<scrollAnimationElements.length; i++){
 		var temp;
 		if(hasScrolledIntoView(temp = scrollAnimationElements[i])){
@@ -36,3 +58,4 @@ window.addEventListener("scroll", function(){
 	}
 	
 }, false);
+
