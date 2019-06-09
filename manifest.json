@@ -1,0 +1,16 @@
+{
+	"short_name": "BS Portfolio",
+	"name": "Baraja Swargiary Portfolio",
+	"icons": [
+		{
+			"src": "assets/logos/baraja portfolio icon.png",
+			"type": "image/png",
+			"sizes": "500x500"
+		}
+	],
+	"start_url": "https://barajasss.github.io/",
+	"background_color": "white",
+	"display": "fullscreen",
+	"theme_color": "teal",
+	"scope": "/"
+}

@@ -1,3 +1,8 @@
+body{
+	overflow-x: hidden;
+	margin: 0;
+}
+
 footer.jumbotron{
 	margin-bottom: 0;
 }
@@ -105,14 +110,17 @@ media queries
 @media screen and (max-width: 450px){
 	div[class*="carousel-item"] h1{
 		margin-top: 10px;
-		font-size: 2rem;
+		font-size: 1.5rem;
 	}
 	div[class*="carousel-item"] h3{
-		font-size: 1.2rem;
+		font-size: 1rem;
 	}
 	#intro-small{
 		padding-top: 5px;
 		font-size: 0.8rem;
+	}
+	div[class*="carousel"] ol{
+		transform: translateY(-50%);
 	}
 }
 
@@ -120,4 +128,14 @@ media queries
 	div[class*="carousel-item"] *{
 		font-size: 1.2rem;
 	}
+}
+
+
+::-webkit-scrollbar{
+	background-color: #bbb;
+	width: 12px;
+}
+::-webkit-scrollbar-thumb{
+	border-radius: 5px;
+	background-color: #444;
 }
