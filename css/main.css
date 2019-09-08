@@ -48,6 +48,7 @@ div.project-container:hover *{
 }
 img.project-image{
 	border-radius: 5px;
+	border: 2px solid white;
 }
 img.project-image:hover{
 	outline: 2px solid teal;
@@ -67,11 +68,23 @@ div#scroller-btn{
 	cursor: pointer; 
 	transform: scale(0);
 	transition: 0.5s; 
+	z-index: 100;
 }
 
 div#scroller-btn:hover{
 	opacity: 0.7;
 } 
+
+
+
+.owl-carousel > .item{
+}
+.project-container.card{
+	min-height: 430px;
+	width: 500px;
+	border: 1px solid darkgreen;
+	background-color: #afa;
+}
 
 
 
@@ -100,6 +113,9 @@ media queries
 		height: 200px !important;
 		width: 200px !important;
 	}
+	.project-container.card{
+		width: 350px;
+	}
 }
 @media screen and (max-width: 450px){
 	div[class*="carousel-item"] h1{
@@ -117,7 +133,11 @@ media queries
 	div[class*="carousel"] ol{
 		transform: translateY(-100%);
 	}
+	.project-container.card{
+		width: 300px;
+	}
 }
+
 
 @media screen and (max-width: 350px){
 	div[class*="carousel-item"] *{
