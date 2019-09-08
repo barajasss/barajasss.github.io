@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Portfolio Baraja Swargiary</title>
+	<title>Portfolio Baraja Swargiary in owl-carousel</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	<meta name="theme-color" content="teal">
@@ -11,6 +11,9 @@
 	<link rel="manifest" href="manifest.json">
 	<link href="dependencies/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="dependencies/animate.css" type="text/css" rel="stylesheet">
+
+	<link href="dependencies/owlcarousel/dist/assets/owl.theme.default.min.css" rel="stylesheet" type="text/css">
+	<link href="dependencies/owlcarousel/dist/assets/owl.carousel.min.css" rel="stylesheet" type="text/css">
 
 	<link href="dependencies/fontawesome/css/all.css" rel="stylsheet">
 	<script src="dependencies/fontawesome/js/all.js"></script>
@@ -180,61 +183,90 @@
 		</div>
 	</div>
 	<div class="container">
-		<div class="row">
-			<div class="col-md pt-5 project-container">
-				<h2>Number System Converter</h2>
-				<a href="projects/number system converter app/index.html" target="_blank">
-					<img class="img-fluid my-2 project-image" src="projects/number system converter app/icon.png" alt="number system converter">
-				</a>
-				<p class="h6">
-					Convert number systems from binary to hexadecimial or decimal to binary etc.
-					Easy to use. Used materialize.css and vue.js as frameworks.
-				</p>
+		<!-- project container class is just for teal color on hovering -->
+		<div class="owl-carousel owl-theme">
+			<div class="item card project-container">
+				<div class="card-header">
+					<h2 class="card-title">Number System Converter</h2>
+				</div>
+				<div class="card-body">
+					<a href="projects/number system converter app/index.html" target="_blank">
+						<img class="img-fluid my-2 project-image" src="projects/number system converter app/icon.png" alt="number system converter">
+					</a>
+					<p class="h6">
+						Convert number systems from binary to hexadecimial or decimal to binary etc.
+						Easy to use. Used materialize.css and vue.js as frameworks.
+					</p>
+				</div>
 			</div>
-			<div class="col-md pt-5 project-container">
-				<h2>Tower of Hanoi</h2>
-				<a href="projects/Tower of hanoi/index.html" target="_blank">
-					<img class="img-fluid my-2 project-image" src="projects/Tower of hanoi/icon.png" alt="tower of hanoi">
-				</a>
-				<p class="h6">
-					Move all the discs form one tower to the other without keeping any larger disc on top of smaller one. Designed with CSS, made with javascript. This game can be played with keyboard.
-				</p>
+			<div class="item card project-container">
+				<div class="card-header">
+					<h2 class="card-title">Tower of Hanoi</h2>
+				</div>
+				<div class="card-body">
+					<a href="projects/Tower of hanoi/index.html" target="_blank">
+						<img class="img-fluid my-2 project-image" src="projects/Tower of hanoi/icon.png" alt="tower of hanoi">
+					</a>
+					<p class="h6">
+						Move all the discs form one tower to the other without keeping any larger disc on top of smaller one. Designed with CSS, made with javascript. This game can be played with keyboard.
+					</p>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md pt-5 project-container">
-				<h2>Cute Piano</h2>
-				<a href="projects/cute piano/index.html" target="_blank">
-					<img class="img-fluid my-2 project-image" src="projects/cute piano/icon.png" alt="cute piano css3">
-				</a>
-				<p class="h6">
-					Play this cute piano on your pc. Designed with CSS3. Piano can be played by clicking with mouse or by touching (in case of touch devices). Better experience on pc.
-				</p>
+			<div class="item card project-container">
+				<div class="card-header">
+					<h2 class="title">Cute Piano</h2>
+				</div>
+				<div class="card-body">
+					<a href="projects/cute piano/index.html" target="_blank">
+						<img class="img-fluid my-2 project-image" src="projects/cute piano/icon.png" alt="cute piano css3">
+					</a>
+					<p class="h6">
+						Play this cute piano on your pc. Designed with CSS3. Piano can be played by clicking with mouse or by touching (in case of touch devices). Better experience on pc.
+					</p>
+				</div>
 			</div>
-			<div class="col-md pt-5 project-container">
-				<h2>Speed Typing Game</h2>
-				<a href="projects/typing game/index.html" target="_blank">
-					<img class="img-fluid my-2 project-image" src="projects/typing game/icon.png" alt="typing game javascript">
-				</a>
-				<p class="h6">
-					Test how many points you can score in this intersting speed typing game in JavaScript. PC Preferred for better experience.
-				</p>
+			<div class="item card project-container">
+				<div class="card-header">
+					<h2 class="card-title">Speed Typing Game</h2>
+				</div>
+				<div class="card-body">
+					<a href="projects/typing game/index.html" target="_blank">
+						<img class="img-fluid my-2 project-image" src="projects/typing game/icon.png" alt="typing game javascript">
+					</a>
+					<p class="h6">
+						Test how many points you can score in this intersting speed typing game in JavaScript. PC Preferred for better experience.
+					</p>
+				</div>
 			</div>
-		</div>
+			<div class="item card project-container">
+				<div class="card-header">
+					<h2 class="card-title">Real Time Chat Web App</h2>
+				</div>
+				<div class="card-body">
+					<a href="https://intense-headland-50619.herokuapp.com/" target="_blank">
+						<img class="img-fluid my-2 project-image" src="projects/nodechat/icon.png" alt="node js global chat app">
+					</a>
+					<p class="h6">
+						Chat with two or more friends globally in real time. Made using nodejs, express, socket.io and bootstrap 4.
+					</p>
+				</div>
+			</div>
+			<div class="item card project-container">
+				<div class="card-header">
+					<h2 class="card-title">2048 Puzzle</h2>
+				</div>
+				<div class="card-body">
+					<a href="projects/2048/2048.html" target="_blank">
+						<img class="img-fluid my-2 project-image" src="projects/2048/icon.png" alt="2048 puzzle game image display snapshot">
+					</a>
+					<p class="h6">
+						Try to reach 2048 by combining all the blocks and adding them.
+					</p>
+				</div>
+			</div>
+		</div><!-- div.card-group -->
 
-		<div class="row">
-			<div class="col-md pt-5 project-container">
-				<h2>Real Time Chat Web App</h2>
-				<a href="https://intense-headland-50619.herokuapp.com/" target="_blank">
-					<img class="img-fluid my-2 project-image" src="projects/nodechat/icon.png" alt="node js global chat app">
-				</a>
-				<p class="h6">
-					Chat with two or more friends globally in real time. Made using nodejs, express, socket.io and bootstrap 4.
-				</p>
-			</div>
-		</div>
-
-	</div>
+	</div><!-- div.container -->
 
 
 
@@ -403,9 +435,35 @@
 
 	<script src="dependencies/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 
+	<script src="dependencies/owlcarousel/dist/owl.carousel.min.js" type="text/javascript"></script>
+
 	<!-- <script src="https://kit.fontawesome.com/f8b048199f.js"></script> -->
 
-	<script src="js/main.js">
+	<script src="js/main.js"></script>
+
+	<script>
+		//configuration for owl carousel for projects
+		$('.owl-carousel').owlCarousel({
+			loop: true,
+			center: true,
+			items: 3,
+			autoWidth: true,
+			stagePadding: 150,
+			responsive: {
+				0: {
+					margin: 10,
+					dots: false
+				},
+				500: {
+					margin: 20,
+					dots: true,
+					autoplay: true,
+					autoplayTimeout: 4000,
+					autoplayHoverPause: false
+				}
+			}
+		})
+
 	</script>
 
 </body>
