@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test carousel</title>
+	<link rel="stylesheet" type="text/css" href="assets/owl.carousel.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/owl.theme.default.min.css">
+	<style>
+		.owl-carousel{
+			cursor: pointer;
+		}
+		div.item{
+			height: 150px;
+			line-height: 150px;
+			text-align: center;
+			background-color: green;
+		} 	
+	</style>
+</head>
+<body>
+
+	<div class="owl-carousel owl-theme">
+		<div class="item">This is item 1</div>
+		<div class="item">Item number 2</div>
+		<div class="item">Love pets 3</div>
+		<div class="item">4 Girls dancing</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="owl.carousel.min.js"></script>
+	<script>
+		$('.owl-carousel').owlCarousel({
+			loop: true,
+			center: true,
+			margin: 15,
+			nav: false,
+			stagePadding: 100,
+			autoplay: true,
+			autoplayTimeout: 500,
+			autoplayHoverPause: true,
+			responsive: {
+				//it is mobile first
+				0: {
+					dots: false,
+					items: 1
+				},
+				700: {
+					dots: true,
+					items: 3
+				}
+			}
+		})
+
+	</script>
+</body>
+</html>
