@@ -1,0 +1,133 @@
+h1{
+    font-size: 40px;
+    text-align: center;
+    font-family: "edwardian script itc", cursive;
+    margin: 0;
+}
+h2{
+    margin-top: 0;
+    font-size: 20px;
+    text-align: center;
+    font-family: "edwardian script itc", cursive;
+}
+.btn{
+    background-color: green;
+    color: white;
+    border: none;
+    margin: 5px;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    outline: none;
+}
+.btn:hover{
+    opacity: 0.8;
+}
+.patterns{
+    max-width: 600px;
+    background: gray;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    position: relative;
+}
+checkbox#loop{
+    font-size: 30px;
+}
+.pattern{
+    height: 30px;
+    width: 20px;
+    display: inline-block;
+    background-color: #333;
+    border-radius: 2px;
+    margin: 5px;
+}
+.pattern.active{
+    background-color: greenyellow;
+}
+.pattern.inactive{
+    background-color: #333;
+}
+.pattern.highlight{
+    box-shadow: 1px 1px 4px 4px white, -1px -1px 4px 4px white;
+    transition: 0.1s;
+}
+.pattern.active.highlight{
+    box-shadow: 1px 1px 4px 4px lime, -1px -1px 4px 4px lime;
+}
+.pattern:hover{
+    box-shadow: 1px 1px 4px 4px yellow, -1px -1px 4px 4px yellow;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.add-pattern-btn{
+    font-size: 24px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    margin-left: 10px;
+    margin-top: 0;
+    width: 25px;
+    display: inline-block;
+}
+
+.remove-pattern-btn{
+    font-size: 24px;
+    padding: 5px;
+    border: none;
+    margin-left: 10px;
+    margin-top: 0;
+    width: 25px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+div.controls{
+    max-width: 600px;
+    background-color: rgb(240, 154, 41);
+    padding: 10px;
+    margin: 10px auto;
+    display: flex;
+    flex-flow: row wrap;
+    border-radius: 5px;
+}
+div.controls > *{   
+    flex: 1 70px;
+}
+div.name{
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    text-transform: capitalize;
+    font-size: 14px;
+    background-color: #111;
+    color: white;
+    padding: 8px;
+    border-radius: 5px 0px 5px 0px;
+}
+.btn.hide{
+    display: none;
+}
+.btn.show{
+    display: inline;
+}
+@media screen and (max-width: 500px){
+    .patterns{
+        padding-top: 25px;
+        padding-bottom: 5px;
+    }
+    div.name{
+        padding: 2px 20px;
+        font-size: 12px;
+    }
+    .add-pattern-btn, .remove-pattern-btn, #create-pattern, #remove-pattern{
+        display: none !important;
+    }
+    .pattern:hover{
+        box-shadow: none;
+    }
+}

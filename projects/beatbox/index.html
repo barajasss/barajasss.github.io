@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#333">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="og:title" content="Cotton Beat Box">
+    <meta name="og:description" content="Click the patterns to create your own beats.">
+    <meta name="og:image" content="og.png">
+    
+    <title>Beat Box</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="siteicon.png" type="image/png">
+</head>
+<body>
+    <h1>Cotton Beat Box</h1>
+    <h2>A music application in JavaScript</h2>
+    <div class="controls">
+        <button id="start-btn" class="btn">Play / Pause</button>
+        <button id="stop-btn" class="btn" style="background-color: red;">Stop</button>
+        <button id="clear-btn" class="btn" style="background-color: maroon;">Clear all</button>
+        <button id="create-pattern" class="btn">Create New Beat Pattern</button>
+        <button id="remove-pattern" class="btn" style="background-color: red;">Remove Last Created Beat Pattern</button>
+    </div>
+
+    <div class="patterns-container">
+        <div class="patterns">
+            <div class="name">Bass</div>
+        </div>
+    </div>
+
+    <h2>Created By <a href="barajasss.github.io" style="text-decoration: none; color: dodgerblue;">Baraja Swargiary</a></h2>
+    <br>
+    <script>
+        var playBtn = document.querySelector('#start-btn');
+        var stopBtn = document.getElementById('stop-btn');
+        var clearBtn = document.getElementById('clear-btn');
+
+        var instruments = ['bass', 'drum', 'snare', 'e piano'];
+        var beats = [];
+        var intervals = [];
+        var beatPosition = 0;
+        var playing = false;
+        const maxPatterns = 14; //16 = 18-2 actually due to some bug;
+        var totalPatterns = 8;
+        var totalPatternContainers = 1;
+        var patternsContainer = document.querySelector('.patterns-container'); //the container of patterns
+
+        var patternContainers = [{
+            container: document.querySelector('.patterns'),
+            btnState: [],
+            patternEl: []
+        }];
+        //the array of all the pattern containers
+
+        var createPatternBlockBtn = document.getElementById('create-pattern');
+        var removePatternBlockBtn = document.getElementById('remove-pattern');
+
+
+
+
+        window.onload = function(){
+
+            init();
+            if(window.innerHeight < 700){
+                //add three more instruments
+                for(var i=0; i<3; i++){
+                    createPatternBlockBtn.click();
+                }
+            }
+
+        }
+
+
+        function init(){
+
+            //load sounds
+
+            for(var i=0; i<instruments.length; i++){
+                var beat = new Audio();
+                beat.src = 'audio/' + instruments[i] + '.wav';
+                if(i == 4){
+                    beat.volume = 0.8;
+                }
+                beats.push(beat);
+            }
+
+            createPatterns(patternContainers[0], totalPatterns);
+            updateBtn(totalPatternContainers);
+        }
+
+
+
+        clearBtn.addEventListener('click', function(){
+            for(var i=0; i<patternContainers.length; i++){
+                var btnState = patternContainers[i].btnState;
+                for(var j=0; j < btnState.length; j++){
+                    btnState[j].active = false;
+                    patternContainers[i].patternEl[j].setAttribute('class', 'pattern inactive');
+                }
+            }
+        }, false);
+
+
+
+
+        createPatternBlockBtn.addEventListener('click', ()=>{
+            if(patternContainers.length >= instruments.length){
+                return;
+            }
+            console.log(totalPatterns);
+            var tempContainer = createPatternBlock();
+            patternsContainer.appendChild(tempContainer);
+            patternContainers.push({
+                container: tempContainer,
+                btnState: [],
+                patternEl: []
+            })
+            //need to call this at the end so that it can access the objects in patternContainers properly.
+            createPatterns(patternContainers[patternContainers.length-1], totalPatterns);
+            clearIntervals();
+            changeState(patternContainers[patternContainers.length-1], 0, false);
+            updateBtn(totalPatternContainers);
+        }, false);
+
+        removePatternBlockBtn.addEventListener('click', removePatternBlock, false);
+
+        function createPatternBlock(){
+            var patternBlock = document.createElement('div');
+            var name = document.createElement('div');
+            name.innerHTML = instruments[totalPatternContainers];
+            name.className = 'name';
+            patternBlock.appendChild(name);
+            patternBlock.setAttribute('class', 'patterns');
+            totalPatternContainers++;
+            return patternBlock;
+        }
+
+        function removePatternBlock(){
+            if(totalPatternContainers <= 1){
+                return;
+            }
+            var lastEl = patternsContainer.lastChild;
+            patternsContainer.removeChild(lastEl);
+            patternContainers.pop();
+            totalPatternContainers--;
+            updateBtn(totalPatternContainers);
+        }
+
+        function createPatterns(patternContainer, count){
+            if(count >= maxPatterns){
+                return;
+            }
+            //creates a group of beat patterns
+            for(var i=0; i<count; i++){
+                var pattern = createPattern(patternContainer);
+                patternContainer.container.appendChild(pattern);
+            }
+            var addPatternBtn = document.createElement('button');
+            var removePatternBtn = document.createElement('button');
+            addPatternBtn.setAttribute('class', 'add-pattern-btn');
+            removePatternBtn.setAttribute('class', 'remove-pattern-btn');
+
+            addPatternBtn.innerHTML = "+";
+            removePatternBtn.innerHTML = "-";
+
+            addPatternBtn.addEventListener('click', ()=>{
+                if(totalPatterns < maxPatterns-2){
+                    addPattern(patternContainer)
+                    addPattern(patternContainer)
+                }
+            });
+            removePatternBtn.addEventListener('click', ()=>{
+                if(totalPatterns > 4){
+                    removePattern(patternContainer)
+                    removePattern(patternContainer)
+                }
+            });
+
+            patternContainer.container.appendChild(addPatternBtn);
+            patternContainer.container.appendChild(removePatternBtn);
+
+            changeState(patternContainer, beatPosition);
+        }
+
+        function createPattern(patternContainer){
+            //creates one beat pattern
+            var pattern = document.createElement('div');
+            pattern.setAttribute('class', 'pattern inactive');
+            patternContainer.btnState.push({
+                active: false
+            })
+            patternContainer.patternEl.push(pattern); 
+
+            //attach listener
+            (function(i){
+                pattern.addEventListener('click', function(){
+                    if(pattern.getAttribute('class') == 'pattern active'){
+                        pattern.setAttribute('class', 'pattern inactive');
+                        patternContainer.btnState[i].active = false;
+                    }
+                    else{
+                        pattern.setAttribute('class', 'pattern active');
+                        patternContainer.btnState[i].active = true;
+                    }
+                    console.log(patternContainer.btnState);
+                })
+            })(patternContainer.btnState.length-1);
+            return pattern;
+        }
+
+
+        function addPattern(patternContainer){
+            if(patternContainer.btnState.length >= maxPatterns){
+                return;
+            }
+            for(var i=0; i<patternContainers.length; i++){
+                (function(patternContainer){
+                    var pattern = createPattern(patternContainer);
+                    patternContainer
+                        .container
+                        .insertBefore(
+                            pattern, 
+                            patternContainer.container.lastChild.previousSibling
+                        );
+                    console.log(patternContainer.btnState);
+                })(patternContainers[i]);
+            }
+            totalPatterns++;
+        }
+        function removePattern(patternContainer){
+            totalPatterns--;
+            var lastPattern = patternContainer
+                                .container
+                                .lastChild
+                                .previousSibling
+                                .previousSibling;
+            patternContainer.container.removeChild(lastPattern);
+            patternContainer.patternEl.pop();
+            patternContainer.btnState.pop();
+            console.log(patternContainer.btnState);
+        }
+
+
+
+        playBtn.addEventListener('click', function(e){
+            if(playing){
+                clearIntervals(e, true);
+                playing = false;
+            }
+            else{
+                playBeats(beats);
+                playing = true;
+            }
+        }, false);
+
+        stopBtn.addEventListener('click', clearIntervals, false);
+        
+        
+        function clearIntervals(e, pause = false){
+            if(!playing)
+                return;
+            console.log('intervals from stopBtn: ', intervals);
+            playing = false;
+            for(var i=intervals.length-1; i>=0; i--){
+                clearInterval(intervals[i]);
+                console.log(pause);
+                if(!pause){
+                    changeState(patternContainers[i], 0, false);
+                }
+            }
+            intervals = [];
+        }
+
+
+        function playBeat(beat){
+            beat.play();
+            //make the button quickly be able to play sounds
+            setTimeout(function(){
+                beat.pause();
+                beat.currentTime = 0;
+            }, 100);
+        }
+
+        function playBeats(beats){
+            //run the loop for each pattern container
+            for(var j=0; j<patternContainers.length; j++){
+                (function(j){
+                    var i = beatPosition;
+                    var interval = setInterval(()=>{
+                        console.log(i);
+                        changeState(patternContainers[j], i);
+                        if(patternContainers[j].btnState[i].active == true){
+                            playBeat(beats[j]);
+                            console.log('played');
+                        }
+                        i++;
+                        if(!playing){
+                            clearInterval(interval);
+                        }
+                        if(patternContainers[j].btnState.length <= i){
+                            i = 0;
+                        }
+                    }, 200);
+                    intervals.push(interval);
+                    console.log(intervals);
+                })(j);
+            }
+        }
+
+        function changeState(patternContainer, i, change = true){
+            //this function is used for highlighting the pattern
+            //remove all the other states/designs/highlights in patterns
+            for(var j=0; j<patternContainer.patternEl.length; j++){
+                if(patternContainer.btnState[j].active == true){
+                    patternContainer.patternEl[j].setAttribute('class', 'pattern active');
+                }
+                else{
+                    patternContainer.patternEl[j].setAttribute('class', 'pattern inactive');
+                }
+            }
+            if(change){
+                beatPosition = i;
+                patternContainer.patternEl[i].setAttribute('class', patternContainer.patternEl[i].getAttribute('class') + ' highlight');
+            }
+            else{
+                beatPosition = 0;
+            }
+        }
+
+        function updateBtn(i){
+            if(totalPatternContainers >= instruments.length){  
+                createPatternBlockBtn.className = 'hide btn';
+            }
+            else{
+                createPatternBlockBtn.className = 'show btn';
+                createPatternBlockBtn.innerHTML = 'Add ' + instruments[i];
+            }
+            //for remove btn;
+            if(totalPatternContainers == 1){
+                removePatternBlockBtn.className = 'hide btn';
+            }
+            else{
+                removePatternBlockBtn.className = 'show btn';
+                removePatternBlockBtn.innerHTML = 'Remove ' + instruments[i-1];
+            }
+        }
+
+    </script>
+</body>
+</html>
