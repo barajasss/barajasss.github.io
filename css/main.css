@@ -46,6 +46,10 @@ ol[class*="carousel-indicators"] li.active{
 div.project-container:hover *{
 	color: teal;
 }
+div.project-container .dodgerblue{
+	color: #15e;
+	text-decoration: none;
+}
 img.project-image{
 	border-radius: 5px;
 	border: 2px solid white;
@@ -83,7 +87,8 @@ div#scroller-btn:hover{
 	min-height: 430px;
 	width: 500px;
 	border: 1px solid darkgreen;
-	background-color: #afa;
+	/*background-color: #afa;*/
+	background-color: #9d9;
 }
 
 
